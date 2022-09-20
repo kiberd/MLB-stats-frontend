@@ -1,4 +1,4 @@
-##AWS-CDK (lambda) 를 이용한 메이저리그 기록 조회용 front-end
+## Lehman baseball database 를 이용한 메이저리그 기록 조회 front-end
 
 ### Stack
 - Typescript

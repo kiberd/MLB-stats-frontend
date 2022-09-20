@@ -4,6 +4,7 @@
 - Typescript
 - Next.js
 - Tailwind CSS
+- Axios
 - Recoil
 - D3.js
 

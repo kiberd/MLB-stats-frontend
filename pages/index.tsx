@@ -3,7 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useQuery } from "react-query";
-import { getPlayersInfo } from "../api/api";
+import { getPlayersInfo } from "../apis/api";
 
 import React, { useEffect, useState } from "react";
 import useQueryDebounce from "../hooks/useQueryDebounce";
@@ -33,8 +33,8 @@ const Home: NextPage = () => {
     <div>
       <input onChange={handleNameChange}></input>
       
-      {data && data.map((player: any) => (
-        <div>
+      {data && data.map((player: any, index: any) => (
+        <div key={player._source.player.name}>
           {player._source.player.name}
         </div>
       ))}

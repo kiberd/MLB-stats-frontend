@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getPlayersInfo } from "../api/api";
+import { getPlayersInfo } from "../apis/api";
 
 
 export default function useSearchPlayers(name: string) {

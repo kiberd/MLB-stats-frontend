@@ -6,10 +6,10 @@ type CreatePlayersInfo = {
   starting_index: number;
 };
 
-console.log(process.env.NEXT_PUBLIC_ENDPOINT);
+
 
 export const getPlayersInfo = async (name: string) => {
-  const { data } = await axios.post<CreatePlayersInfo>(
+  const { data } = await axios.post<any>(
     process.env.NEXT_PUBLIC_ENDPOINT + `/search`,
     {
       name_input: name,
@@ -18,7 +18,8 @@ export const getPlayersInfo = async (name: string) => {
     }
   );
 
-  console.log(data);
+//   console.log(data);
 
-  return 1;
+
+  return data.hits;
 };

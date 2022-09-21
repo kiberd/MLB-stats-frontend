@@ -1,5 +1,7 @@
 ## Lehman baseball database 를 이용한 메이저리그 기록 조회 front-end
 
+https://mlb-stats-frontend.vercel.app/
+
 ### Stack
 - Typescript
 - Next.js

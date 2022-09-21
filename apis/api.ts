@@ -13,7 +13,7 @@ export const getPlayersInfo = async (name: string) => {
     process.env.NEXT_PUBLIC_ENDPOINT + `/search`,
     {
       name_input: name,
-      result_size: 20,
+      result_size: 1000,
       starting_index: 0,
     }
   );

@@ -5,7 +5,9 @@ import Link from "next/link";
 const Header = () => {
   return (
     <header className="sticky top-0 flex items-center justify-between h-16 p-4 font-bold text-white bg-teal-800">
-      <h1 className="text-xl">Logo</h1>
+      <h1 className="text-xl">
+        <Link href="/">Logo</Link>
+      </h1>
       <nav className="flex">
         <div className="mr-10">
           <Link href="/">

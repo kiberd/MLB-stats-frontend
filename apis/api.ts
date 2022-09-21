@@ -1,25 +1,16 @@
 import axios from "axios";
+import { SearchPlayersParams } from "params";
 
-type CreatePlayersInfo = {
-  name_input: string;
-  result_size: number;
-  starting_index: number;
-};
-
-
-
-export const getPlayersInfo = async (name: string) => {
+export const getPlayersInfo = async (params: SearchPlayersParams | null) => {
   const { data } = await axios.post<any>(
     process.env.NEXT_PUBLIC_ENDPOINT + `/search`,
     {
-      name_input: name,
-      result_size: 1000,
-      starting_index: 0,
+      name_input: params?.name,
+      result_size: params?.resultSize,
+      starting_index: params?.startingIndex,
     }
   );
 
-//   console.log(data);
 
-
-  return data.hits;
+  return data;
 };

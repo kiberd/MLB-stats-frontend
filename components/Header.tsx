@@ -1,12 +1,22 @@
 import React from "react";
 import SearchInput from "./SearchInput";
 import Link from "next/link";
+import Image from "next/image";
 
 const Header = () => {
   return (
-    <header className="sticky top-0 flex items-center justify-between h-16 p-4 font-bold text-white bg-teal-800">
-      <h1 className="text-xl">
-        <Link href="/">Logo</Link>
+    <header className="sticky top-0 flex items-center justify-between h-[7vh] p-4 font-bold text-white bg-teal-800">
+      <h1 className="text-xl flex justify-center items-center">
+        
+        <Link href="/">
+          {/* <Image
+            src='/logo.png'
+            width={110}
+            height={60}
+          // layout="fill"
+          /> */}
+          Logo
+          </Link>
       </h1>
       <nav className="flex items-center px-4">
         <div className="mr-10">

@@ -6,7 +6,7 @@ import { ArrowTrendingUpIcon, MagnifyingGlassIcon, ArrowDownOnSquareIcon } from 
 
 const Landing = () => {
   return (
-    <div className="container min-h-full mx-auto bg-transparent">
+    <div className="container mx-auto bg-transparent">
       <div className="p-10">
         <p className="text-[40px] text-white ml-3">
           엘라스틱 서치를 활용한

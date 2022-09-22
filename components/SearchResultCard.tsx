@@ -8,29 +8,11 @@ import {
   Tooltip,
   XYChart,
 } from "@visx/xychart";
-
+import ParentSize from '@visx/responsive/lib/components/ParentSize';
 import Chart from "./Chart";
+import RadarChart from "./RadarChart";
+import ListBox from "./ListBox";
 
-const data1 = [
-  { x: "2021", y: 50 },
-  { x: "2020", y: 10 },
-  // { x: "2019", y: 20 },
-  // { x: "2018", y: 50 },
-  // { x: "2017", y: 10 },
-  // { x: "2016", y: 20 },
-  // { x: "2015", y: 50 },
-  // { x: "2014", y: 10 },
-  // { x: "2013", y: 20 },
-  // { x: "2012", y: 50 },
-  // { x: "2011", y: 10 },
-  // { x: "2010", y: 20 },
-];
-
-const data2 = [
-  { x: "2021", y: 30 },
-  { x: "2020", y: 40 },
-  { x: "2019", y: 80 },
-];
 
 const accessors = {
   xAccessor: (d: any) => d.x,
@@ -71,14 +53,15 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
 
   return (
     <div className="py-3">
-      <div className="flex p-6 bg-gray-400 border border-gray-300 rounded-md h-[35vh]">
+      <div className="flex p-6 border border-gray-300 rounded-md h-[35vh]">
         {/* Left Side */}
-        <div className="bg-red-300 w-[30%]">
+        <div className="w-[30%] h-full border-r border-gray-300 pr-4">
+
           {/* Name */}
-          <div className="text-lg font-bold">{player._source.player.name}</div>
+          <div className="text-lg font-bold h-[10%] ">{player._source.player.name}</div>
 
           {/* Record */}
-          <div className="mt-2">
+          <div className="h-[15%]  flex items-center">
             <span className="text-sm text-gray-500">
               {
                 player._source.player.batting.filter((x: any) => x.stint == 1)
@@ -94,11 +77,36 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
               {"   "} / 홈런 : {player._source.player.career_batting.homeruns}
             </span>
           </div>
+
+          {/* Radar Chart */}
+          <div className="h-[75%] ">
+            <ParentSize>{({ width, height }) => <RadarChart width={width} height={height} />}</ParentSize>
+          </div>
+
         </div>
 
         {/* Right Side */}
-        <div className="ml-2 bg-blue-300 w-[70%]">
-          {targetData && <Chart data={targetData} accessors={accessors} />}
+        <div className="ml-2 w-[70%] h-full">
+
+
+          <div className="flex justify-between h-[10%]">
+          <div className="w-[20%] ml-10">
+            <ListBox />
+          </div>
+
+          <div className="mr-10 text-center">
+            <button className="border border-gray-100 rounded-md bg-[#115E59] text-white text-sm px-3 py-2">Detail</button>
+          </div>
+
+          </div>
+
+
+
+
+
+          <div className="h-[90%]">
+            {targetData && <Chart data={targetData} accessors={accessors} />}
+          </div>
         </div>
       </div>
     </div>

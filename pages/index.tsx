@@ -11,10 +11,10 @@ const Home: NextPage = () => {
   return (
     <div>
       <Header />
-      <main className="bg-[url('../public/stadium.jpg')] bg-cover min-h-full h-auto pb-16">
+      <main className="bg-[url('../public/stadium.jpg')] bg-cover min-h-[86vh] h-auto">
+        {/* <main className="bg-[url('../public/stadium.jpg')] bg-cover h-[86vh]"> */}
         <Landing />
       </main>
-
       <Footer />
     </div>
   );

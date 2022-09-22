@@ -8,7 +8,7 @@ const Header = () => {
       <h1 className="text-xl">
         <Link href="/">Logo</Link>
       </h1>
-      <nav className="flex">
+      <nav className="flex items-center px-4">
         <div className="mr-10">
           <Link href="/">
             <a>선수비교</a>

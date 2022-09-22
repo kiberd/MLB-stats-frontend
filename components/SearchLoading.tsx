@@ -13,8 +13,8 @@ const SearchLoading: React.FC<SearchLoadingProps> = ({ query }) => {
     <div>
       <Header />
       <main className="w-[100vw] h-[87vh]">
-        <div className="container min-h-full mx-auto bg-transparent">
-          <SearchQuery prefix="Searching for" query={query} count={undefined} />
+        <div className="container min-h-full p-10 mx-auto bg-transparent">
+          <SearchQuery prefix="Searching for " query={query} count={undefined} />
         </div>
       </main>
       <Footer />

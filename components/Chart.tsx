@@ -16,55 +16,42 @@ interface ChartProps{
 
 const Chart:React.FC<ChartProps> = ({ data, accessors }) => {
     return (
-        <div>
+      <div className="w-[20vw] h-[15vh] flex items-center justify-center">
       <XYChart
-        height={100}
-        margin={{ left: 60, top: 35, bottom: 38, right: 27 }}
-        xScale={{ type: "time" }}
+        height={180}
+        xScale={{ type: "band" }}
         yScale={{ type: "linear" }}
       >
-        <AnimatedGrid
-          columns={false}
-          numTicks={4}
-          lineStyle={{
-            stroke: "#e1e1e1",
-            strokeLinecap: "round",
-            strokeWidth: 1
-          }}
-          strokeDasharray="0, 4"
-        />
-        <AnimatedAxis
-          hideAxisLine
-          hideTicks
-          orientation="bottom"
-        //   tickLabelProps={() => ({ dy: tickLabelOffset })}
-          left={30}
-          numTicks={4}
-        />
-        <AnimatedAxis
-          hideAxisLine
-          hideTicks
-          orientation="left"
-          numTicks={4}
-          tickLabelProps={() => ({ dx: -10 })}
-        />
-
+        <AnimatedAxis orientation="bottom" />
+        <AnimatedGrid columns={false} numTicks={4} />
         <AnimatedLineSeries
-          stroke="#008561"
-          dataKey="primary_line"
+          dataKey="Line 1"
           data={data}
           {...accessors}
         />
-        {/* <Tooltip
-          snapTooltipToDatumX
-          snapTooltipToDatumY
-          showSeriesGlyphs
-          glyphStyle={{
-            fill: "#008561",
-            strokeWidth: 0
-          }}
-        
+        {/* <AnimatedLineSeries
+          dataKey="Line 2"
+          data={data2}
+          {...accessors}
         /> */}
+        {/* <Tooltip
+        snapTooltipToDatumX
+        snapTooltipToDatumY
+        showVerticalCrosshair
+        showSeriesGlyphs
+        renderTooltip={({ tooltipData, colorScale }) => (
+          <div>
+            <div
+              style={{ color: colorScale(tooltipData.nearestDatum.key) }}
+            >
+              {tooltipData.nearestDatum.key}
+            </div>
+            {accessors.xAccessor(tooltipData.nearestDatum.datum)}
+            {", "}
+            {accessors.yAccessor(tooltipData.nearestDatum.datum)}
+          </div>
+        )}
+      /> */}
       </XYChart>
     </div>
     );

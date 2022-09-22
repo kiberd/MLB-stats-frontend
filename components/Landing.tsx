@@ -14,7 +14,7 @@ const Landing = () => {
         </p>
 
         <p className="text-[20px] text-gray-400 ml-3">
-          with Lahman’s Baseball Database
+          with Lahman’s Baseball Database (~ 2020)
         </p>
 
         <div className="mt-5 ml-3">

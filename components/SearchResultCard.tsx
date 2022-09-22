@@ -33,6 +33,9 @@ interface SearchResultCardProps {
 }
 
 const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
+
+  
+
   return (
     <div className="py-3">
       <div className="flex p-6 border border-gray-300 rounded-md">
@@ -62,44 +65,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
 
         {/* Right Side */}
         <div className="ml-2">
-          <div className="w-[20vw] h-[15vh] flex items-center justify-center">
-            <XYChart
-              height={180}
-              xScale={{ type: "band" }}
-              yScale={{ type: "linear" }}
-            >
-              <AnimatedAxis orientation="bottom" />
-              <AnimatedGrid columns={false} numTicks={4} />
-              <AnimatedLineSeries
-                dataKey="Line 1"
-                data={data1}
-                {...accessors}
-              />
-              <AnimatedLineSeries
-                dataKey="Line 2"
-                data={data2}
-                {...accessors}
-              />
-              {/* <Tooltip
-              snapTooltipToDatumX
-              snapTooltipToDatumY
-              showVerticalCrosshair
-              showSeriesGlyphs
-              renderTooltip={({ tooltipData, colorScale }) => (
-                <div>
-                  <div
-                    style={{ color: colorScale(tooltipData.nearestDatum.key) }}
-                  >
-                    {tooltipData.nearestDatum.key}
-                  </div>
-                  {accessors.xAccessor(tooltipData.nearestDatum.datum)}
-                  {", "}
-                  {accessors.yAccessor(tooltipData.nearestDatum.datum)}
-                </div>
-              )}
-            /> */}
-            </XYChart>
-          </div>
+          <Chart data={data1} accessors={accessors} />
         </div>
       </div>
     </div>

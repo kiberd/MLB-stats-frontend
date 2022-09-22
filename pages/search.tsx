@@ -17,28 +17,30 @@ import SearchResult from "../components/SearchResult";
 
 const Search: NextPage = () => {
   const router: NextRouter = useRouter();
+  const [params, setParams] = useState<SearchPlayersParams>();
 
-  const resultSize = 10;
-  const startingIndex =
-    (parseInt(router.query.page as string) - 1) * resultSize;
+  useEffect(() => {
+    if (router.query) {
+      setParams({
+        name: router.query.q as string,
+        resultSize: 10,
+        startingIndex: (parseInt(router.query.page as string) - 1) * 10,
+      });
+    }
+  }, [router.query]);
 
   const { data, isLoading, isFetching, isError } = useSearchPlayers(
-    router.query.q && resultSize && startingIndex >= 0
-      ? ({
-          name: router.query.q,
-          resultSize: resultSize,
-          startingIndex: startingIndex,
-        } as SearchPlayersParams)
-      : null
+    params ? params : null
   );
 
-  if (isLoading) return <SearchLoading query={router.query.q as string} />;
+  if (isLoading || isFetching)
+    return <SearchLoading query={router.query.q as string} />;
 
   return (
     <div>
       <Header />
       <main>
-        <SearchResult query={router.query.q as string} data={data}/>
+        <SearchResult query={router.query.q as string} data={data} />
       </main>
       <Footer />
     </div>

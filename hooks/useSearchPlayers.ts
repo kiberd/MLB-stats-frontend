@@ -6,7 +6,7 @@ import { SearchPlayersParams } from "params";
 export default function useSearchPlayers(params: SearchPlayersParams | null) {
 
   return useQuery<any[]>(
-    ["getAddressByQuery", params?.name],
+    ["getAddressByQuery", params],
     () => getPlayersInfo(params),
     {
       enabled: !!params,

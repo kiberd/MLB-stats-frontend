@@ -80,10 +80,9 @@ const MyPaginate = styled(ReactPaginate).attrs({
 
 const SearchResult: React.FC<SearchResultProps> = ({ query, data }) => {
 
-  console.log(data);
+//  console.log(data);
 
   const router: NextRouter = useRouter();  
-  
   const [pageCount, setPageCount] = useState<number>(0);
 
   useEffect(() => {
@@ -122,12 +121,21 @@ const SearchResult: React.FC<SearchResultProps> = ({ query, data }) => {
         ) : null}
 
         {data &&
+
+
           data.hits.map((player: any, index: any) => (
+
+
             <SearchResultCard
               player={player}
               key={`${player._source.player.playerid}`}
             />
-          ))}
+
+            
+          )
+          
+          
+          )}
       </div>
 
       <PagenationWrapper>

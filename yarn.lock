@@ -140,7 +140,7 @@
   "resolved" "https://registry.npmjs.org/@react-spring/types/-/types-9.5.4.tgz"
   "version" "9.5.4"
 
-"@react-spring/web@^9.4.5":
+"@react-spring/web@^9.4.5", "@react-spring/web@^9.5.4":
   "integrity" "sha512-HoypE3kL/ZUBB81hThE1hB9jYBgJmfeluEOPYoI/wGHyF1q8O0AYpWClvdAbiK3FTESHYZi2m60jwitF7VYUlQ=="
   "resolved" "https://registry.npmjs.org/@react-spring/web/-/web-9.5.4.tgz"
   "version" "9.5.4"

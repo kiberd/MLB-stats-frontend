@@ -1,70 +1,78 @@
-import { Fragment, useState } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { Fragment, useEffect, useState } from "react";
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
-const people = [
-    { id: 1, name: '홈런', unavailable: false },
-    { id: 2, name: '안타', unavailable: false },
-    { id: 3, name: '2루타', unavailable: false },
-    { id: 4, name: '3루타', unavailable: true },
-    { id: 5, name: '타점', unavailable: false },
-]
+const indicator = [
+  { id: 0, name: "타율", value: "avg" },
+  { id: 1, name: "홈런", value: "homeruns" },
+  { id: 2, name: "안타", value: "hits" },
+  { id: 3, name: "타점", value: "rbi" },
+  { id: 4, name: "타석", value: "ab" },
+];
 
-const ListBox = () => {
-    const [selected, setSelected] = useState(people[0])
+interface ListBoxProps {
+  onHandleIndicatorChange: any;
+}
 
-    return (
+const ListBox: React.FC<ListBoxProps> = ({ onHandleIndicatorChange }) => {
+  const [selected, setSelected] = useState(indicator[0]);
 
-        <Listbox value={selected} onChange={setSelected}>
-            <div className="relative mt-1">
-                <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                    <span className="block truncate">{selected.name}</span>
-                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                        <ChevronUpDownIcon
-                            className="h-5 w-5 text-gray-400"
-                            aria-hidden="true"
-                        />
+  useEffect(() => {
+    onHandleIndicatorChange(selected);
+  }, [selected]);
+
+  return (
+    <Listbox value={selected} onChange={setSelected}>
+      <div className="relative z-0 mt-1">
+        <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+          <span className="block truncate">{selected.name}</span>
+          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <ChevronUpDownIcon
+              className="w-5 h-5 text-gray-400"
+              aria-hidden="true"
+            />
+          </span>
+        </Listbox.Button>
+        <Transition
+          as={Fragment}
+          leave="transition ease-in duration-100"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            {indicator.map((indicator, personIdx) => (
+              <Listbox.Option
+                key={personIdx}
+                className={({ active }) =>
+                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                    active ? "bg-amber-100 text-amber-900" : "text-gray-900"
+                  }`
+                }
+                value={indicator}
+              >
+                {({ selected }) => (
+                  <>
+                    <span
+                      className={`block truncate ${
+                        selected ? "font-medium" : "font-normal"
+                      }`}
+                    >
+                      {indicator.name}
                     </span>
-                </Listbox.Button>
-                <Transition
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                        {people.map((person, personIdx) => (
-                            <Listbox.Option
-                                key={personIdx}
-                                className={({ active }) =>
-                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
-                                    }`
-                                }
-                                value={person}
-                            >
-                                {({ selected }) => (
-                                    <>
-                                        <span
-                                            className={`block truncate ${selected ? 'font-medium' : 'font-normal'
-                                                }`}
-                                        >
-                                            {person.name}
-                                        </span>
-                                        {selected ? (
-                                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                                <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                            </span>
-                                        ) : null}
-                                    </>
-                                )}
-                            </Listbox.Option>
-                        ))}
-                    </Listbox.Options>
-                </Transition>
-            </div>
-        </Listbox>
-
-    )
+                    {selected ? (
+                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                        <CheckIcon className="w-5 h-5" aria-hidden="true" />
+                      </span>
+                    ) : null}
+                  </>
+                )}
+              </Listbox.Option>
+            ))}
+          </Listbox.Options>
+        </Transition>
+      </div>
+    </Listbox>
+  );
 };
 
 export default ListBox;

@@ -9,15 +9,18 @@ import {
   AreaSeries
 } from "@visx/xychart";
 
+import { scaleBand, scaleLinear, scaleOrdinal } from "@visx/scale";
 import { curveBasis, curveLinear, curveNatural, curveCardinal } from '@visx/curve';
 import { ParentSize } from "@visx/responsive";
 
 interface ChartProps {
   data: any;
   accessors: any;
+  indicator: string;
 }
 
-const Chart: React.FC<ChartProps> = ({ data, accessors }) => {
+const Chart: React.FC<ChartProps> = ({ data, accessors, indicator }) => {
+
   return (
     <>
       <ParentSize>
@@ -27,48 +30,26 @@ const Chart: React.FC<ChartProps> = ({ data, accessors }) => {
               width={width}
               height={height}
               xScale={{ type: "band" }}
-              yScale={{ type: "band" }}
+              yScale={{ type: "linear" }}
+
             >
               <AnimatedAxis orientation="bottom" />
-              <AnimatedAxis orientation="left" />
+              <AnimatedAxis orientation="left"  tickFormat={(value) => indicator === "avg" ? value.toFixed(3) : value} numTicks={5}/>
               <AnimatedGrid columns={false} numTicks={4} />
               <AnimatedLineSeries
                 dataKey="Line 1"
                 data={data}
                 xAccessor={accessors.xAccessor}
                 yAccessor={accessors.yAccessor}
-                curve={curveNatural}
+
+                curve={curveLinear}
               />
-
-              {/* <AreaSeries
-                dataKey="Line 1"
-                data={data}
-                xAccessor={accessors.xAccessor}
-                yAccessor={accessors.yAccessor}
-                curve={curveBasis}
-              /> */}
-
               <Tooltip
                 snapTooltipToDatumX
                 snapTooltipToDatumY
                 showVerticalCrosshair
                 showSeriesGlyphs
-                //     renderTooltip={({ tooltipData, colorScale }) => (
-                //       <div>
-                //         <div>{tooltipData?.nearestDatum?.index}</div>
-                //         {/* <div
-                //   style={{ color: colorScale(tooltipData.nearestDatum.key) }}
-                // >
-                //   {tooltipData.nearestDatum.key}
-                // </div>
-                // {accessors.xAccessor(tooltipData.nearestDatum.datum)}
-                // {", "}
-                // {accessors.yAccessor(tooltipData.nearestDatum.datum)} */}
-                //       </div>
-                //     )}
                 renderTooltip={({ tooltipData, colorScale }) => {
-                  // console.log(tooltipData);
-
                   return (
                     <div>
                       {accessors.xAccessor(tooltipData?.nearestDatum?.datum)}

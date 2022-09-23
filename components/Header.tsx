@@ -5,8 +5,8 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    <header className="sticky top-0 flex items-center justify-between h-[7vh] p-4 font-bold text-white bg-teal-800">
-      <h1 className="text-xl flex justify-center items-center">
+    <header className="sticky top-0 flex items-center justify-between h-[7vh] p-4 font-bold text-white bg-teal-800 z-10">
+      <h1 className="flex items-center justify-center text-xl">
         
         <Link href="/">
           {/* <Image

@@ -12,6 +12,12 @@ import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import Chart from "./Chart";
 import RadarChart from "./RadarChart";
 import ListBox from "./ListBox";
+import { Switch } from "@headlessui/react";
+
+import {
+  InformationCircleIcon
+} from "@heroicons/react/24/solid";
+
 
 const accessors = {
   xAccessor: (d: any) => d.x,
@@ -24,105 +30,59 @@ interface SearchResultCardProps {
 
 const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
 
+  console.log(player);
+
+  const [enabled, setEnabled] = useState(false);
   const [targetData, setTargetData] = useState<any>();
   const [indicator, setIndicator] = useState<string>("avg");
 
   useEffect(() => {
-
     const indicatorArry: any = [];
 
-      player._source.player.batting.map((record: any) => {
-        const year = record.yearid.toString();
-        const indi = Number(record[indicator]);
+    player._source.player.batting.map((record: any) => {
+      const year = record.yearid.toString();
+      const indi = Number(record[indicator]);
 
-        const recordObj = {
-          x: year,
-          y: indi,
-          count: 1,
-        };
+      const recordObj = {
+        x: year,
+        y: indi,
+        count: 1,
+      };
 
-        const duppIndex = indicatorArry.findIndex((e: any) => e.x === year);
+      const duppIndex = indicatorArry.findIndex((e: any) => e.x === year);
 
-        if (duppIndex !== -1) {
-          // do something
-          const oldIndi = indicatorArry[duppIndex].y;
-          indicatorArry[duppIndex].y = indi + oldIndi;
-          indicatorArry[duppIndex].count += 1;
-        } else {
-          indicatorArry.push(recordObj);
-        }
-      });
+      if (duppIndex !== -1) {
+        // do something
+        const oldIndi = indicatorArry[duppIndex].y;
+        indicatorArry[duppIndex].y = indi + oldIndi;
+        indicatorArry[duppIndex].count += 1;
+      } else {
+        indicatorArry.push(recordObj);
+      }
+    });
 
-      const filterdIndicatorArry: any = [];
+    const filterdIndicatorArry: any = [];
 
-      indicatorArry.map((indicatorObj: any) => {
-        const filterdObj = indicatorObj;
+    indicatorArry.map((indicatorObj: any) => {
+      const filterdObj = indicatorObj;
 
-        if (indicator === "avg") {
-          filterdObj.y = (indicatorObj.y / indicatorObj.count).toFixed(3);
-        } else {
-          filterdObj.y = (indicatorObj.y);
-        }
-        
-        delete filterdObj.count;
+      if (indicator === "avg") {
+        filterdObj.y = (indicatorObj.y / indicatorObj.count).toFixed(3);
+      } else {
+        filterdObj.y = indicatorObj.y;
+      }
 
-        filterdIndicatorArry.push(filterdObj);
-      });
+      delete filterdObj.count;
 
-      setTargetData(filterdIndicatorArry);
+      filterdIndicatorArry.push(filterdObj);
+    });
 
-  } ,[indicator]);
-
-
-  
-  // useEffect(() => {
-  //   if (player) {
-      
-  //     const avgArry: any = [];
-
-  //     player._source.player.batting.map((record: any) => {
-  //       const year = record.yearid.toString();
-  //       const avg = Number(record.avg);
-
-  //       const recordObj = {
-  //         x: year,
-  //         y: avg,
-  //         count: 1,
-  //       };
-
-  //       const duppIndex = avgArry.findIndex((e: any) => e.x === year);
-
-  //       if (duppIndex !== -1) {
-  //         // do something
-  //         const oldAvg = avgArry[duppIndex].y;
-  //         avgArry[duppIndex].y = avg + oldAvg;
-  //         avgArry[duppIndex].count += 1;
-  //       } else {
-  //         avgArry.push(recordObj);
-  //       }
-  //     });
-
-  //     const filterdAvgArry: any = [];
-
-  //     avgArry.map((avgObj: any) => {
-  //       const filterdObj = avgObj;
-
-  //       filterdObj.y = (avgObj.y / avgObj.count).toFixed(3);
-  //       delete filterdObj.count;
-
-  //       filterdAvgArry.push(filterdObj);
-  //     });
-
-  //     setTargetData(filterdAvgArry);
-  //   }
-  // }, [player]);
+    setTargetData(filterdIndicatorArry);
+  }, [indicator]);
 
   const handleIndicatorChange = (indi: any) => {
     setIndicator(indi.value);
   };
-
-
-  
 
   return (
     <div className="py-3">
@@ -130,8 +90,25 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
         {/* Left Side */}
         <div className="w-[30%] h-full border-r border-gray-300 pr-4">
           {/* Name */}
-          <div className="text-lg font-bold h-[10%] ">
+          <div className="text-lg font-bold h-[10%] flex justify-between">
             {player._source.player.name}
+            <div className="flex items-center">
+              <InformationCircleIcon className="w-4 h-4 mr-2" />
+              <Switch
+                checked={enabled}
+                onChange={setEnabled}
+                className={`${
+                  enabled ? "bg-[#115E59]" : "bg-gray-200 mr-4"
+                } relative inline-flex h-5 w-10 items-center rounded-full mr-4`}
+              >
+                <span className="sr-only">Enable notifications</span>
+                <span
+                  className={`${
+                    enabled ? "translate-x-6" : "translate-x-1"
+                  } inline-block h-3 w-3 transform rounded-full bg-white transition`}
+                />
+              </Switch>
+            </div>
           </div>
 
           {/* Record */}
@@ -147,8 +124,10 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
             <span className="ml-1 text-sm text-gray-500">
               타율 :{" "}
               {cleanAverageString(player._source.player.career_batting.avg)}
-              {"   "} / 안타 : {(player._source.player.career_batting.hits).toLocaleString()}
-              {"   "} / 홈런 : {(player._source.player.career_batting.homeruns).toLocaleString()}
+              {"   "} / 안타 :{" "}
+              {player._source.player.career_batting.hits.toLocaleString()}
+              {"   "} / 홈런 :{" "}
+              {player._source.player.career_batting.homeruns.toLocaleString()}
             </span>
           </div>
 
@@ -177,7 +156,13 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
           </div>
 
           <div className="h-[90%]">
-            {targetData && <Chart data={targetData} accessors={accessors} indicator={indicator} />}
+            {targetData && (
+              <Chart
+                data={targetData}
+                accessors={accessors}
+                indicator={indicator}
+              />
+            )}
           </div>
         </div>
       </div>

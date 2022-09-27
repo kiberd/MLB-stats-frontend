@@ -9,76 +9,36 @@ import {
   XYChart,
 } from "@visx/xychart";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
-import Chart from "./Chart";
+import LineChart from "./LineChart";
 import RadarChart from "./RadarChart";
 import ListBox from "./ListBox";
 import { Switch } from "@headlessui/react";
 
-import {
-  InformationCircleIcon
-} from "@heroicons/react/24/solid";
+import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
-
-const accessors = {
-  xAccessor: (d: any) => d.x,
-  yAccessor: (d: any) => d.y,
-};
+import useCleansPlayer from "../hooks/useCleansPlayer";
+import useSummaryPlayer from "../hooks/useSummaryPlayer";
 
 interface SearchResultCardProps {
   player: any;
 }
 
 const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
-
-  console.log(player);
-
-  const [enabled, setEnabled] = useState(false);
-  const [targetData, setTargetData] = useState<any>();
+  
   const [indicator, setIndicator] = useState<string>("avg");
+  const [type, setType] = useState<string>("batting");
+  const [validate, setValidate] = useState<boolean>(true);
+
+  const lineChartData = useCleansPlayer(player, indicator);
+  const summaryData = useSummaryPlayer(player, type);
 
   useEffect(() => {
-    const indicatorArry: any = [];
-
-    player._source.player.batting.map((record: any) => {
-      const year = record.yearid.toString();
-      const indi = Number(record[indicator]);
-
-      const recordObj = {
-        x: year,
-        y: indi,
-        count: 1,
-      };
-
-      const duppIndex = indicatorArry.findIndex((e: any) => e.x === year);
-
-      if (duppIndex !== -1) {
-        // do something
-        const oldIndi = indicatorArry[duppIndex].y;
-        indicatorArry[duppIndex].y = indi + oldIndi;
-        indicatorArry[duppIndex].count += 1;
-      } else {
-        indicatorArry.push(recordObj);
-      }
+    // 종합 데이터중 하나라도 이상한 값 (0 or max) 이 있으면 set validate false
+    summaryData.map((data) => {
+      if (Number(data.value) === 0 || Number(data.value) === 1)
+        setValidate(false);
     });
-
-    const filterdIndicatorArry: any = [];
-
-    indicatorArry.map((indicatorObj: any) => {
-      const filterdObj = indicatorObj;
-
-      if (indicator === "avg") {
-        filterdObj.y = (indicatorObj.y / indicatorObj.count).toFixed(3);
-      } else {
-        filterdObj.y = indicatorObj.y;
-      }
-
-      delete filterdObj.count;
-
-      filterdIndicatorArry.push(filterdObj);
-    });
-
-    setTargetData(filterdIndicatorArry);
-  }, [indicator]);
+  }, [summaryData]);
 
   const handleIndicatorChange = (indi: any) => {
     setIndicator(indi.value);
@@ -86,7 +46,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
 
   return (
     <div className="py-3">
-      <div className="flex p-6 border border-gray-300 rounded-md h-[35vh]">
+      <div className="flex p-6 border border-gray-300 rounded-md h-[37vh]">
         {/* Left Side */}
         <div className="w-[30%] h-full border-r border-gray-300 pr-4">
           {/* Name */}
@@ -94,7 +54,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
             {player._source.player.name}
             <div className="flex items-center">
               <InformationCircleIcon className="w-4 h-4 mr-2" />
-              <Switch
+              {/* <Switch
                 checked={enabled}
                 onChange={setEnabled}
                 className={`${
@@ -107,12 +67,12 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
                     enabled ? "translate-x-6" : "translate-x-1"
                   } inline-block h-3 w-3 transform rounded-full bg-white transition`}
                 />
-              </Switch>
+              </Switch> */}
             </div>
           </div>
 
           {/* Record */}
-          <div className="h-[15%]  flex items-center">
+          <div className="h-[10%]  flex items-center">
             <span className="text-sm text-gray-500">
               {
                 player._source.player.batting.filter((x: any) => x.stint == 1)
@@ -132,12 +92,19 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
           </div>
 
           {/* Radar Chart */}
-          <div className="h-[75%] ">
-            <ParentSize>
-              {({ width, height }) => (
-                <RadarChart width={width} height={height} />
-              )}
-            </ParentSize>
+          <div className="h-[80%] ">
+            {validate ? (
+              <ParentSize>
+                {({ width, height }) => (
+                  <RadarChart
+                    width={width}
+                    height={height}
+                    data={summaryData}
+                  />
+                )}
+              </ParentSize>
+            ) : <div className="flex items-center justify-center h-full text-xs text-gray-400">
+              분석할 데이터가 충분하지 않습니다.</div>}
           </div>
         </div>
 
@@ -156,12 +123,8 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
           </div>
 
           <div className="h-[90%]">
-            {targetData && (
-              <Chart
-                data={targetData}
-                accessors={accessors}
-                indicator={indicator}
-              />
+            {lineChartData && (
+              <LineChart data={lineChartData} indicator={indicator} />
             )}
           </div>
         </div>

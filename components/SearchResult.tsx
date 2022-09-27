@@ -79,7 +79,6 @@ const MyPaginate = styled(ReactPaginate).attrs({
 `;
 
 const SearchResult: React.FC<SearchResultProps> = ({ query, data }) => {
-  //  console.log(data);
 
   const router: NextRouter = useRouter();
   const [pageCount, setPageCount] = useState<number>(0);

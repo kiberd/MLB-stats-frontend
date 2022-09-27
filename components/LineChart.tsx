@@ -15,11 +15,16 @@ import { ParentSize } from "@visx/responsive";
 
 interface ChartProps {
   data: any;
-  accessors: any;
   indicator: string;
-}
+};
 
-const Chart: React.FC<ChartProps> = ({ data, accessors, indicator }) => {
+const accessors = {
+  xAccessor: (d: any) => d.x,
+  yAccessor: (d: any) => d.y,
+};
+
+
+const LineChart: React.FC<ChartProps> = ({ data, indicator }) => {
 
   return (
     <>
@@ -67,4 +72,4 @@ const Chart: React.FC<ChartProps> = ({ data, accessors, indicator }) => {
   );
 };
 
-export default Chart;
+export default LineChart;

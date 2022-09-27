@@ -1,5 +1,5 @@
 import React from "react";
-import SearchInput from "./SearchInput";
+import SearchInput from "./search/SearchInput";
 import Link from "next/link";
 import Image from "next/image";
 

@@ -12,8 +12,8 @@ import useSearchPlayers from "../hooks/useSearchPlayers";
 
 import { NextRouter, useRouter } from "next/router";
 import { SearchPlayersParams } from "params";
-import SearchLoading from "../components/SearchLoading";
-import SearchResult from "../components/SearchResult";
+import SearchLoading from "../components/search/SearchLoading";
+import SearchResult from "../components/search/SearchResult";
 
 const Search: NextPage = () => {
   const router: NextRouter = useRouter();

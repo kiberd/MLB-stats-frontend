@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { cleanAverageString } from "../utils/cleans";
+import { cleanAverageString } from "../../utils/cleans";
 
 import {
   AnimatedAxis,
@@ -9,22 +9,22 @@ import {
   XYChart,
 } from "@visx/xychart";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
-import LineChart from "./LineChart";
-import RadarChart from "./RadarChart";
-import ListBox from "./ListBox";
+import LineChart from "../chart/LineChart";
+import RadarChart from "../chart/RadarChart";
+import ListBox from "../ListBox";
 import { Switch } from "@headlessui/react";
+import { CustomTooltip } from "../CustomTooltip";
 
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
-import useCleansPlayer from "../hooks/useCleansPlayer";
-import useSummaryPlayer from "../hooks/useSummaryPlayer";
+import useCleansPlayer from "../../hooks/useCleansPlayer";
+import useSummaryPlayer from "../../hooks/useSummaryPlayer";
 
 interface SearchResultCardProps {
   player: any;
 }
 
 const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
-  
   const [indicator, setIndicator] = useState<string>("avg");
   const [type, setType] = useState<string>("batting");
   const [validate, setValidate] = useState<boolean>(true);
@@ -53,7 +53,13 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
           <div className="text-lg font-bold h-[10%] flex justify-between">
             {player._source.player.name}
             <div className="flex items-center">
-              <InformationCircleIcon className="w-4 h-4 mr-2" />
+
+
+              <CustomTooltip message="각 지표의 최대값은 역대 메이저리그 기록의 최대값 기준입니다.">
+                <InformationCircleIcon className="w-4 h-4 mr-2" />
+              </CustomTooltip>
+
+              
               {/* <Switch
                 checked={enabled}
                 onChange={setEnabled}
@@ -103,8 +109,11 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
                   />
                 )}
               </ParentSize>
-            ) : <div className="flex items-center justify-center h-full text-xs text-gray-400">
-              분석할 데이터가 충분하지 않습니다.</div>}
+            ) : (
+              <div className="flex items-center justify-center h-full text-xs text-gray-400">
+                분석할 데이터가 충분하지 않습니다.
+              </div>
+            )}
           </div>
         </div>
 

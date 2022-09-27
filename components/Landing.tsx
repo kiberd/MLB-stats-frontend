@@ -1,5 +1,5 @@
 import React from "react";
-import SearchInput from "./SearchInput";
+import SearchInput from "./search/SearchInput";
 import InfoCard from "./InfoCard";
 
 import { ArrowTrendingUpIcon, MagnifyingGlassIcon, ArrowDownOnSquareIcon } from '@heroicons/react/24/solid';

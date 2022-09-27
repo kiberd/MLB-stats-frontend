@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { cleanAverageString } from "../../utils/cleans";
-
+import Router, { useRouter } from "next/router";
 import {
   AnimatedAxis,
   AnimatedGrid,
@@ -44,6 +44,18 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
     setIndicator(indi.value);
   };
 
+  const handleDetailClick = () => {
+    if (player) {
+      const id = player._source.player.playerid;
+      Router.push({
+        pathname: "/detail",
+        query: {
+          id: id,
+        },
+      });
+    }
+  };
+
   return (
     <div className="py-3">
       <div className="flex p-6 border border-gray-300 rounded-md h-[37vh]">
@@ -53,13 +65,10 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
           <div className="text-lg font-bold h-[10%] flex justify-between">
             {player._source.player.name}
             <div className="flex items-center">
-
-
               <CustomTooltip message="각 지표의 최대값은 역대 메이저리그 기록의 최대값 기준입니다.">
                 <InformationCircleIcon className="w-4 h-4 mr-2" />
               </CustomTooltip>
 
-              
               {/* <Switch
                 checked={enabled}
                 onChange={setEnabled}
@@ -125,7 +134,10 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
             </div>
 
             <div className="mr-10 text-center">
-              <button className="border border-gray-100 rounded-md bg-[#115E59] text-white text-sm px-3 py-2">
+              <button
+                className="border border-gray-100 rounded-md bg-[#115E59] text-white text-sm px-3 py-2"
+                onClick={handleDetailClick}
+              >
                 Detail
               </button>
             </div>

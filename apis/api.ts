@@ -11,6 +11,13 @@ export const getPlayersInfo = async (params: SearchPlayersParams | null) => {
     }
   );
 
+  return data;
+};
+
+export const getPlayersBattingInfo = async (playerid: string | null) => {
+  const { data } = await axios.get<any>(
+    process.env.NEXT_PUBLIC_ENDPOINT + `/batting/` + playerid
+  );
 
   return data;
 };

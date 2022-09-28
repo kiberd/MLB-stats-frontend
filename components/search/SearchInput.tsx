@@ -34,7 +34,7 @@ const SearchInput = () => {
     <div className="flex items-center">
       <input
         type="text"
-        className="px-3 py-1 m-0 mr-2 text-base font-normal text-gray-700 transition ease-in-out bg-white border rounded-md outline-none border-gray-50 "
+        className="px-3 py-1 mr-2 w-[130px] tablet:w-auto text-base font-normal text-gray-700 transition ease-in-out bg-white border rounded-md outline-none border-gray-50 "
         placeholder="선수 검색"
         onChange={handleSearchInput}
         onKeyDown={handleSearchInputEnter}

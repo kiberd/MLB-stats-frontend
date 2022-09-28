@@ -8,12 +8,12 @@ const Landing = () => {
   return (
     <div className="container mx-auto bg-transparent">
       <div className="p-10">
-        <p className="text-[40px] text-white ml-3">
+        <p className="text-[25px] tablet:text-[40px] text-white ml-3">
           엘라스틱 서치를 활용한
           <br /> 메이저리그 기록 검색{" "}
         </p>
 
-        <p className="text-[20px] text-gray-400 ml-3">
+        <p className="text-[13px] tablet:text-[20px] text-gray-400 ml-3">
           with Lahman’s Baseball Database (~ 2020)
         </p>
 

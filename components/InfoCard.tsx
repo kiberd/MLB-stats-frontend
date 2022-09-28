@@ -10,7 +10,7 @@ interface InfoCardProps{
 const InfoCard:React.FC<InfoCardProps> = ({ title, subTitle, logo }) => {
   return (
     <div className="p-3">
-      <div className=" min-h-[45vh] bg-white flex-col w-full p-3 border border-gray-400 rounded-md">
+      <div className="laptop:min-h-[300px] bg-white flex-col w-full p-3 border border-gray-400 rounded-md">
         
         {/* Title */}
         <div className="p-6 text-2xl text-center text-gray-700 border-b border-gray-300">

@@ -33,7 +33,6 @@ const MyPaginate = styled(ReactPaginate).attrs({
   // justify-content: space-between;
   justify-content: center;
   list-style-type: none;
-  padding: 0 5rem;
   li {
     margin: 0 0.5rem 0 0.5rem;
   }
@@ -79,7 +78,6 @@ const MyPaginate = styled(ReactPaginate).attrs({
 `;
 
 const SearchResult: React.FC<SearchResultProps> = ({ query, data }) => {
-
   const router: NextRouter = useRouter();
   const [pageCount, setPageCount] = useState<number>(0);
 
@@ -103,7 +101,8 @@ const SearchResult: React.FC<SearchResultProps> = ({ query, data }) => {
 
   return (
     <>
-      <div className="container min-h-full p-10 mx-auto bg-transparent">
+      {/* <div className="container min-h-full p-10 mx-auto bg-transparent"> */}
+      <div className="container  min-h-full py-10 bg-transparent max-w-[330px] tablet:max-w-2xl laptop:max-w-4xl desktop:max-w-5xl mx-auto">
         <div className="my-4">
           <SearchQuery
             prefix="Results for "
@@ -123,20 +122,20 @@ const SearchResult: React.FC<SearchResultProps> = ({ query, data }) => {
               key={`${player._source.player.playerid}`}
             />
           ))}
-      </div>
 
-      <PagenationWrapper>
-        <MyPaginate
-          breakLabel="..."
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={7}
-          marginPagesDisplayed={1}
-          pageCount={pageCount}
-          initialPage={Number(router.query.page) - 1}
-          previousLabel={<ChevronLeftIcon className="w-4 h-4" />}
-          nextLabel={<ChevronRightIcon className="w-4 h-4" />}
-        />
-      </PagenationWrapper>
+        <PagenationWrapper>
+          <MyPaginate
+            breakLabel="..."
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={2}
+            marginPagesDisplayed={1}
+            pageCount={pageCount}
+            initialPage={Number(router.query.page) - 1}
+            previousLabel={<ChevronLeftIcon className="w-4 h-4" />}
+            nextLabel={<ChevronRightIcon className="w-4 h-4" />}
+          />
+        </PagenationWrapper>
+      </div>
     </>
   );
 };

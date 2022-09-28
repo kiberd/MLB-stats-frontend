@@ -26,7 +26,7 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
   };
 
   return (
-    <div className="container  min-h-full py-10 mx-auto bg-transparent max-w-[330px] tablet:max-w-lg laptop:max-w-4xl desktop:max-w-5xl">
+    <div className="container min-h-full py-10 mx-auto bg-transparent max-w-[330px] tablet:max-w-lg laptop:max-w-4xl desktop:max-w-5xl">
       {/* 상단 info */}
       <div className="flex justify-between py-4 border-b-2 border-gray-300">
         <span className="text-3xl font-bold">
@@ -34,7 +34,7 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
         </span>
 
         <div className="flex items-center justify-center">
-          <CustomTooltip message="투수 / 타자 기록 전환">
+          {/* <CustomTooltip message="투수 / 타자 기록 전환">
             <InformationCircleIcon className="w-4 h-4 mr-2" />
           </CustomTooltip>
 
@@ -51,7 +51,7 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
                 enabled ? "translate-x-6" : "translate-x-1"
               } inline-block h-3 w-3 transform rounded-full bg-white transition`}
             />
-          </Switch>
+          </Switch> */}
         </div>
       </div>
 

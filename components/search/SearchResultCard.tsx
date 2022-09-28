@@ -58,16 +58,25 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
 
   return (
     <div className="py-3">
-      <div className="flex p-6 border border-gray-300 rounded-md h-[37vh]">
+      <div className="flex p-6 border border-gray-300 rounded-md h-[300px]">
+
+        
         {/* Left Side */}
-        <div className="w-[30%] h-full border-r border-gray-300 pr-4">
+        <div className="w-full tablet:w-[35%] laptop:w-[30%] h-full tablet:border-r tablet:border-gray-300 tablet:pr-4">
           {/* Name */}
           <div className="text-lg font-bold h-[10%] flex justify-between">
-            {player._source.player.name}
+            <span>{player._source.player.name}</span>
+
             <div className="flex items-center">
-              <CustomTooltip message="각 지표의 최대값은 역대 메이저리그 기록의 최대값 기준입니다.">
+              <button
+                className="tablet:hidden border border-gray-100 rounded-lg bg-[#115E59] text-white text-[10px] px-2 mb-2"
+                onClick={handleDetailClick}
+              >
+                Detail
+              </button>
+              {/* <CustomTooltip message="각 지표의 최대값은 역대 메이저리그 기록의 최대값 기준입니다.">
                 <InformationCircleIcon className="w-4 h-4 mr-2" />
-              </CustomTooltip>
+              </CustomTooltip> */}
 
               {/* <Switch
                 checked={enabled}
@@ -87,8 +96,8 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
           </div>
 
           {/* Record */}
-          <div className="h-[10%]  flex items-center">
-            <span className="text-sm text-gray-500">
+          <div className="h-[10%] flex items-center mb-1">
+            <span className="text-xs text-gray-500">
               {
                 player._source.player.batting.filter((x: any) => x.stint == 1)
                   .length
@@ -96,7 +105,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
               년 &#183;{"   "}
             </span>
 
-            <span className="ml-1 text-sm text-gray-500">
+            <span className="ml-1 text-xs text-gray-500">
               타율 :{" "}
               {cleanAverageString(player._source.player.career_batting.avg)}
               {"   "} / 안타 :{" "}
@@ -107,7 +116,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
           </div>
 
           {/* Radar Chart */}
-          <div className="h-[80%] ">
+          <div className="h-[80%]">
             {validate ? (
               <ParentSize>
                 {({ width, height }) => (
@@ -127,9 +136,9 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
         </div>
 
         {/* Right Side */}
-        <div className="ml-2 w-[70%] h-full">
+        <div className="ml-2 tablet:w-[65%] laptop:w-[70%] h-full hidden tablet:block">
           <div className="flex justify-between h-[10%]">
-            <div className="w-[20%] ml-4">
+            <div className="w-[30%] laptop:w-[20%] ml-4">
               <ListBox onHandleIndicatorChange={handleIndicatorChange} />
             </div>
 
@@ -149,6 +158,8 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
             )}
           </div>
         </div>
+
+
       </div>
     </div>
   );

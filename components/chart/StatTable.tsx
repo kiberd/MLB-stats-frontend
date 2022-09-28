@@ -13,16 +13,6 @@ const StatTable: React.FC<StatTableProps> = ({ columns, data }) => {
   return (
     <table {...getTableProps()}>
       <thead>
-        {/* {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()} className="p-2 border border-black">
-                {column.render("Header")}
-              </th>
-            ))}
-          </tr>
-        ))} */}
-
         {headerGroups.map((headerGroup) => {
           const { key, ...restHeaderGroupProps } =
             headerGroup.getHeaderGroupProps();
@@ -31,7 +21,11 @@ const StatTable: React.FC<StatTableProps> = ({ columns, data }) => {
               {headerGroup.headers.map((column) => {
                 const { key, ...restColumn } = column.getHeaderProps();
                 return (
-                  <th key={key} {...restColumn} className="p-2 border border-black">
+                  <th
+                    key={key}
+                    {...restColumn}
+                    className="p-2 border border-black min-w-[80px] desktop:min-w-[60px]"
+                  >
                     {column.render("Header")}
                   </th>
                 );
@@ -42,19 +36,6 @@ const StatTable: React.FC<StatTableProps> = ({ columns, data }) => {
       </thead>
 
       <tbody {...getTableBodyProps()}>
-        {/* {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => (
-                <td {...cell.getCellProps()} className="px-4 py-2 text-center border border-black min-w-[3vw] text-gray-600">
-                  {cell.render("Cell")}
-                </td>
-              ))}
-            </tr>
-          );
-        })} */}
-
         {rows.map((row) => {
           prepareRow(row);
           const { key, ...restRowProps } = row.getRowProps();
@@ -63,7 +44,11 @@ const StatTable: React.FC<StatTableProps> = ({ columns, data }) => {
               {row.cells.map((cell) => {
                 const { key, ...restCellProps } = cell.getCellProps();
                 return (
-                  <td key={key} {...restCellProps} className="px-4 py-2 text-center border border-black min-w-[3vw] text-gray-600">
+                  <td
+                    key={key}
+                    {...restCellProps}
+                    className="px-4 py-2 text-center text-gray-600 border border-black"
+                  >
                     {cell.render("Cell")}
                   </td>
                 );

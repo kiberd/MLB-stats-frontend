@@ -2,7 +2,7 @@ import { abort } from "process";
 import React, { useEffect, useState, useMemo } from "react";
 
 const useMakeTableData = (battingRecord: any) => {
-  console.log(battingRecord);
+  // console.log(battingRecord);
 
   const [rowData, setRowData] = useState<any[]>();
 
@@ -24,7 +24,7 @@ const useMakeTableData = (battingRecord: any) => {
           homeruns: record.homeruns,
           rbi: record.rbi,
           sb: record.sb,
-        //   cs: record.cs,
+          // cs: record.cs,
           bb: record.bb,
           so: record.so,
           ibb: record.ibb
@@ -85,10 +85,10 @@ const useMakeTableData = (battingRecord: any) => {
         accessor: "sb",
         Header: "도루",
       },
-    //   {
-    //     accessor: "cs",
-    //     Header: "도루실패",
-    //   },
+      // {
+      //   accessor: "cs",
+      //   Header: "도루실패",
+      // },
       {
         accessor: "bb",
         Header: "볼넷",

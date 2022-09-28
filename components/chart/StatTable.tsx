@@ -71,8 +71,8 @@ const StatTable: React.FC<StatTableProps> = ({ columns, data }) => {
           const { key, ...restFooterGroupProps } = footerGroup.getFooterGroupProps();
 
           return (
-            <tr {...footerGroup.getFooterGroupProps()}>
-
+            // <tr key={key} {...footerGroup.getFooterGroupProps()}>
+            <tr key={key} {...restFooterGroupProps}>
               {footerGroup.headers.map((column) => {
                 const { key, ...restColumn } = column.getFooterProps();
                 return (

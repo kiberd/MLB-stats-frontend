@@ -7,8 +7,14 @@ interface StatTableProps {
 }
 
 const StatTable: React.FC<StatTableProps> = ({ columns, data }) => {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    footerGroups,
+    rows,
+    prepareRow,
+  } = useTable({ columns, data });
 
   return (
     <table {...getTableProps()}>
@@ -59,6 +65,16 @@ const StatTable: React.FC<StatTableProps> = ({ columns, data }) => {
           );
         })}
       </tbody>
+
+      <tfoot>
+        {footerGroups.map((footerGroup) => (
+          <tr {...footerGroup.getFooterGroupProps()}>
+            {footerGroup.headers.map((column) => (
+              <td {...column.getFooterProps} className="px-2 py-2 font-bold text-center text-gray-600 border border-black">{column.render("Footer")}</td>
+            ))}
+          </tr>
+        ))}
+      </tfoot>
     </table>
   );
 };

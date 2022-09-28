@@ -67,13 +67,25 @@ const StatTable: React.FC<StatTableProps> = ({ columns, data }) => {
       </tbody>
 
       <tfoot>
-        {footerGroups.map((footerGroup) => (
-          <tr {...footerGroup.getFooterGroupProps()}>
-            {footerGroup.headers.map((column) => (
-              <td {...column.getFooterProps} className="px-2 py-2 font-bold text-center text-gray-600 border border-black">{column.render("Footer")}</td>
-            ))}
-          </tr>
-        ))}
+        {footerGroups.map((footerGroup) => {
+          const { key, ...restFooterGroupProps } = footerGroup.getFooterGroupProps();
+
+          return (
+            <tr {...footerGroup.getFooterGroupProps()}>
+
+              {footerGroup.headers.map((column) => {
+                const { key, ...restColumn } = column.getFooterProps();
+                return (
+                  <td key={key} {...column.getFooterProps} className="px-2 py-2 font-bold text-center text-gray-600 border border-black">{column.render("Footer")}</td>
+                )
+              }
+              )}
+            </tr>
+          )
+
+        }
+
+        )}
       </tfoot>
     </table>
   );

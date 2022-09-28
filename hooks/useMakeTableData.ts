@@ -4,7 +4,7 @@ import React, { useEffect, useState, useMemo } from "react";
 const useMakeTableData = (battingRecord: any) => {
   // console.log(battingRecord);
 
-  const [rowData, setRowData] = useState<any[]>();
+  const [rowData, setRowData] = useState<any>();
 
   useEffect(() => {
     if (battingRecord) {

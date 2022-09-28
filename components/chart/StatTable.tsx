@@ -42,6 +42,7 @@ const StatTable: React.FC<StatTableProps> = ({ columns, data }) => {
           return (
             <tr key={key} {...restRowProps}>
               {row.cells.map((cell) => {
+                const value = cell.value;
                 const { key, ...restCellProps } = cell.getCellProps();
                 return (
                   <td
@@ -49,7 +50,8 @@ const StatTable: React.FC<StatTableProps> = ({ columns, data }) => {
                     {...restCellProps}
                     className="px-4 py-2 text-center text-gray-600 border border-black"
                   >
-                    {cell.render("Cell")}
+                    {/* {cell.render("Cell")} */}
+                    {value ? value : "-"}
                   </td>
                 );
               })}

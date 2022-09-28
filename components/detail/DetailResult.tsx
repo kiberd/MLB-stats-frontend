@@ -9,6 +9,9 @@ import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import LineChart from "../chart/LineChart";
 import useCleansPlayer from "../../hooks/useCleansPlayer";
 import ListBox from "../ListBox";
+// import XLSX from "xlsx";
+import * as XLSX from 'xlsx'
+
 
 interface DetailResultProps {
   data: any;
@@ -23,6 +26,17 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
 
   const handleIndicatorChange = (indi: any) => {
     setIndicator(indi.value);
+  };
+
+  const handleExcelDownload = () => {
+
+    const fileName = `${data._source.player.namefirst} ${data._source.player.namelast}`;
+    const ws = XLSX.utils.json_to_sheet(rowData);
+    const wb = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(wb, ws, 'sheet1');
+    XLSX.writeFile(wb, `${fileName}.xlsx`);
+
   };
 
   return (
@@ -58,8 +72,8 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
       {/* 요약 정보 */}
       <div className="flex flex-col laptop:flex-row justify-between px-8 mt-5 laptop:h-[300px] w-full">
         {/* Left */}
-        <div className="flex flex-col text-sm text-gray-700 w-full laptop:w-[30%] h-full laptop:border-r laptop:border-gray-300 laptop:pr-6 justify-center">
-          <div className="flex flex-col items-center justify-center mb-2">
+        <div className="flex flex-col text-sm text-gray-700 w-full laptop:w-[30%] h-full laptop:border-r laptop:border-gray-300 laptop:pr-6 justify-center tablet:justify-around">
+          <div className="flex flex-col items-center justify-center">
             <span className="mb-1 text-gray-400">
               {data._source.player.throws === "R" ? "우" : "좌"}투{" "}
               {data._source.player.bats === "R" ? "우" : "좌"}타{" "}
@@ -127,7 +141,7 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
         <div className="flex items-center justify-between border-b-[3px] border-teal-800">
           <span className="text-2xl font-bold">타격기록</span>
           <span className="mt-4 mb-2 text-sm font-bold underline cursor-pointer">
-            <a>엑셀저장</a>
+            <a onClick={handleExcelDownload}>엑셀저장</a>
           </span>
         </div>
 

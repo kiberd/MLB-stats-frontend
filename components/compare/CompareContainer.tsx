@@ -36,10 +36,10 @@ const CompareContainer = () => {
     useSearchPlayers(
       debouncedPlayerName
         ? {
-            name: debouncedPlayerName,
-            resultSize: 100,
-            startingIndex: 0,
-          }
+          name: debouncedPlayerName,
+          resultSize: 100,
+          startingIndex: 0,
+        }
         : null
     );
 
@@ -70,7 +70,22 @@ const CompareContainer = () => {
         <span className="text-3xl font-bold">Comparison tool</span>
       </div>
 
-      <div className="min-h-[100px] border border-gray-300 rounded-md mt-2 grid grid-cols-4 p-5 w-full gap-2">
+      {
+        playerList.length === 0 ? <div className="flex justify-center items-center text-gray-400 text-sm my-4 py-4">비교할 선수를 추가해주세요.</div> : null
+      }
+
+      {playerList && playerList.length > 0 ?
+        <div className="min-h-[100px] border border-gray-300 rounded-md mt-2 grid grid-cols-4 p-5 w-full gap-2">
+          {playerList &&
+            playerList.map((data) => (
+              <ComparePlayerCard
+                key={data.playerid}
+                data={data}
+                onHandleRemoveClick={handleRemoveClick}
+              />
+            ))}
+        </div> : null}
+      {/* <div className="min-h-[100px] border border-gray-300 rounded-md mt-2 grid grid-cols-4 p-5 w-full gap-2">
         {playerList &&
           playerList.map((data) => (
             <ComparePlayerCard
@@ -79,14 +94,14 @@ const CompareContainer = () => {
               onHandleRemoveClick={handleRemoveClick}
             />
           ))}
-      </div>
+      </div> */}
 
       {/* 선수 비교 */}
-      <div className="flex justify-center w-full mt-2">
+      <div className="flex justify-center w-full mt-2 border border-gray-300 rounded-md p-3">
         {/* Left */}
-        <div className="flex flex-col w-[60%] border-r border-gray-300 mr-2">
+        <div className="flex flex-col w-[60%] border-r border-gray-300 mr-2 justify-center">
           {/* RadarChart */}
-          <div className="w-full h-[400px] p-2">
+          <div className="w-full h-[420px] p-2">
             {mockdata && (
               <ParentSize>
                 {({ width, height }) => (
@@ -110,7 +125,7 @@ const CompareContainer = () => {
           </div>
 
           {/* SearchResult */}
-          <div className="h-[35vh] overflow-auto border border-gray-300 rounded-md">
+          <div className="h-96 overflow-auto border border-gray-300 rounded-md overscroll-contain">
             {!isLoading && !isFetching && !data ? (
               <div className="flex items-center justify-center w-full h-full text-sm text-gray-400">
                 검색어를 입력해주세요.
@@ -141,7 +156,8 @@ const CompareContainer = () => {
         </div>
       </div>
 
-      <div className="w-full h-full border border-gray-300 rounded-md">
+      <div className="w-full h-96 border border-gray-300 rounded-md mt-2 overscroll-contain overflow-auto">
+        {/* <h2 className="text-lg p-4 font-bold">통산기록</h2> */}
         <ParentSize>
           {({ width, height }) => (
             <HorizontalBarChart width={width} height={height} />

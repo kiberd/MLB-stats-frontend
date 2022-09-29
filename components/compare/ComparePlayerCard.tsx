@@ -18,7 +18,7 @@ const ComparePlayerCard: React.FC<ComparePlayerCardProps> = ({
     <div className="px-4 py-2 border border-gray-300 rounded-md">
       <div className="flex flex-col">
         <div className="flex items-center justify-between mb-2">
-          <span className="mb-1 text-lg font-semibold">{data.name}</span>
+          <span className="mb-1 text-base font-semibold">{data.name}</span>
           <button
             className="border border-gray-100 rounded-md bg-[#115E59] text-white text-[10px] h-[30px] px-4"
             onClick={handleRemoveClick}

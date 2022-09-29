@@ -14,6 +14,7 @@ import { NextRouter, useRouter } from "next/router";
 import { SearchPlayersParams } from "params";
 import SearchLoading from "../components/search/SearchLoading";
 import SearchResult from "../components/search/SearchResult";
+import PageLayout from "../components/PageLayout";
 
 const Search: NextPage = () => {
   const router: NextRouter = useRouter();
@@ -40,7 +41,9 @@ const Search: NextPage = () => {
     <div>
       <Header />
       <main>
-        <SearchResult query={router.query.q as string} data={data} />
+        <PageLayout>
+          <SearchResult query={router.query.q as string} data={data} />
+        </PageLayout>
       </main>
       <Footer />
     </div>

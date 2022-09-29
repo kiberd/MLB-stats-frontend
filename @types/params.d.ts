@@ -1,6 +1,6 @@
 declare module "params" {
     export interface SearchPlayersParams {
-        name: string,
+        name: string | undefined,
         resultSize: number,
         startingIndex: number
       };

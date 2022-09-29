@@ -3,8 +3,9 @@ import type { NextPage } from "next";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import DetailResult from "../components/detail/DetailResult";
-import DetailLoading from "../components/detail/DetailLoading";
 import SearchLoading from "../components/search/SearchLoading";
+
+import PageLayout from "../components/PageLayout";
 
 import useSearchPlayerBatting from "../hooks/useSearchPlayerBatting";
 
@@ -30,7 +31,13 @@ const Detail: NextPage = () => {
   return (
     <div>
       <Header />
-      <main>{data && <DetailResult data={data} />}</main>
+      <main>
+        {data && (
+          <PageLayout>
+            <DetailResult data={data} />
+          </PageLayout>
+        )}
+      </main>
       <Footer />
     </div>
   );

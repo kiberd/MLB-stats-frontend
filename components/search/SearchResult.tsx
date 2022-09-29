@@ -101,41 +101,38 @@ const SearchResult: React.FC<SearchResultProps> = ({ query, data }) => {
 
   return (
     <>
-      {/* <div className="container min-h-full p-10 mx-auto bg-transparent"> */}
-      <div className="container  min-h-full py-10 bg-transparent max-w-[330px] tablet:max-w-2xl laptop:max-w-4xl desktop:max-w-5xl mx-auto">
-        <div className="my-4">
-          <SearchQuery
-            prefix="Results for "
-            query={query}
-            count={data?.total.value}
-          />
-        </div>
-
-        {data && data.total.value === 0 ? (
-          <div className="w-[100vw] h-[73vh]">검색 결과가 없습니다.</div>
-        ) : null}
-
-        {data &&
-          data.hits.map((player: any, index: any) => (
-            <SearchResultCard
-              player={player}
-              key={`${player._source.player.playerid}`}
-            />
-          ))}
-
-        <PagenationWrapper>
-          <MyPaginate
-            breakLabel="..."
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={2}
-            marginPagesDisplayed={1}
-            pageCount={pageCount}
-            initialPage={Number(router.query.page) - 1}
-            previousLabel={<ChevronLeftIcon className="w-4 h-4" />}
-            nextLabel={<ChevronRightIcon className="w-4 h-4" />}
-          />
-        </PagenationWrapper>
+      <div className="my-4">
+        <SearchQuery
+          prefix="Results for "
+          query={query}
+          count={data?.total.value}
+        />
       </div>
+
+      {data && data.total.value === 0 ? (
+        <div className="w-[100vw] h-[73vh]">검색 결과가 없습니다.</div>
+      ) : null}
+
+      {data &&
+        data.hits.map((player: any, index: any) => (
+          <SearchResultCard
+            player={player}
+            key={`${player._source.player.playerid}`}
+          />
+        ))}
+
+      <PagenationWrapper>
+        <MyPaginate
+          breakLabel="..."
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={2}
+          marginPagesDisplayed={1}
+          pageCount={pageCount}
+          initialPage={Number(router.query.page) - 1}
+          previousLabel={<ChevronLeftIcon className="w-4 h-4" />}
+          nextLabel={<ChevronRightIcon className="w-4 h-4" />}
+        />
+      </PagenationWrapper>
     </>
   );
 };

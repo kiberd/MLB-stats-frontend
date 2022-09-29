@@ -71,7 +71,7 @@ function genPolygonPoints<Datum>(
 
 }
 
-const defaultMargin = { top: 25, left: 40, right: 40, bottom: 25 };
+const defaultMargin = { top: 40, left: 40, right: 40, bottom: 40 };
 
 export type RadarProps = {
   width: number;

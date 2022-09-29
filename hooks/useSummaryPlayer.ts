@@ -14,6 +14,8 @@ const useSummaryPlayer = (player: any, type: string) => {
   useEffect(() => {
     const battingRecord = player._source.player.career_batting;
 
+    console.log(battingRecord)
+
     setSummaryData([
       {
         letter: "OnBase",

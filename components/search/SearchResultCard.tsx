@@ -32,6 +32,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
   const lineChartData = useCleansPlayer(player, indicator);
   const summaryData = useSummaryPlayer(player, type);
 
+
   useEffect(() => {
     // 종합 데이터중 하나라도 이상한 값 (0 or max) 이 있으면 set validate false
     summaryData.map((data) => {
@@ -99,8 +100,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
           <div className="h-[10%] flex items-center mb-1">
             <span className="text-xs text-gray-500">
               {
-                player._source.player.batting.filter((x: any) => x.stint == 1)
-                  .length
+                player._source.player.batting.filter((x: any) => x.stint == 1).length
               }{" "}
               년 &#183;{"   "}
             </span>

@@ -195,7 +195,7 @@ export default function RadarChart({
 
           <polygon
             points={polygonPoints?.pointString}
-            // fill={orange}
+            fill={orange}
             stroke={orange}
             fillOpacity={0.3}
             strokeWidth={1}
@@ -218,7 +218,7 @@ export default function RadarChart({
             />
           ))}
 
-          <polygon
+          {/* <polygon
             points={polygonPoints2?.pointString}
             // fill={orange}
             stroke={orange}
@@ -241,7 +241,7 @@ export default function RadarChart({
               }}
               onMouseOut={hideTooltip}
             />
-          ))}
+          ))} */}
 
 
 

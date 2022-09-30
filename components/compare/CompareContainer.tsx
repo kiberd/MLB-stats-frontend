@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SearchInput from "../search/SearchInput";
-import RadarChart from "../chart/RadarChart";
+import CompareRaderChart from "../chart/CompareRaderChart";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import CompareSearchResultCard from "./CompareSearchResultCard";
 import ComparePlayerCard from "./ComparePlayerCard";
@@ -9,6 +9,8 @@ import useQueryDebounce from "../../hooks/useQueryDebounce";
 import useSearchPlayers from "../../hooks/useSearchPlayers";
 import ClipLoader from "react-spinners/ClipLoader";
 import HorizontalBarChart from "../chart/HorizontalBarChart";
+import { summaryPlayer } from "../../utils/calc";
+// import useSummaryPlayer from "../../hooks/useSummaryPlayer";
 
 const mockdata = [
   { letter: "OnBase", value: "0.313" },
@@ -17,15 +19,62 @@ const mockdata = [
   { letter: "Contact", value: "0.441" },
 ];
 
+// const color = [ "green", "red", "blue", "orange" ]
+
 const CompareContainer = () => {
+
+  const [colorState, setColorState] = useState([
+    {
+      name: "green",
+      used: false,
+    },
+    {
+      name: "red",
+      used: false,
+    },
+    {
+      name: "blue",
+      used: false,
+    },
+    {
+      name: "orange",
+      used: false,
+    }
+  ]);
+
   const [playerName, setPlayerName] = useState<string>();
   const [playerList, setPlayerList] = useState<any[]>([]);
+
+  const [radarChartData, setRadarChartData] = useState<any[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPlayerName(e.target.value);
   };
 
   const debouncedPlayerName = useQueryDebounce(playerName, 500);
+
+  useEffect(() => {
+
+    const newRadarChartDataList: any[] = [];
+
+    playerList.map((player) => {
+
+      const summaryData = summaryPlayer(player, "batting");
+
+      const obj = {
+        name: player._source.player.name,
+        color: player.color,
+        // color: "#" + Math.floor(Math.random()*16777215).toString(16),
+        data: summaryData
+      }
+      newRadarChartDataList.push(obj);
+
+    });
+
+    setRadarChartData(newRadarChartDataList);
+
+  }, [playerList]);
+
 
   const {
     data,
@@ -45,20 +94,59 @@ const CompareContainer = () => {
 
   const handleAddClick = (data: any) => {
     const isExist = playerList.some(
-      (player) => player.playerid === data.playerid
+      (player) => player._source.player.playerid === data._source.player.playerid
     );
+
+    let isValid = true;
+    const summaryData = summaryPlayer(data, "batting");
+
+    summaryData.map((data) => {
+      if (Number(data.value) === 0 || Number(data.value) === 1) isValid = false;
+    });
+
     if (isExist) {
       alert("선수비교 목록에 이미 있습니다.");
+    } else if (!isValid) {
+      alert("분석할 데이터가 부족합니다.")
+    } else if (playerList.length === 4){
+      alert("최대 선수 비교 수는 4명입니다.")
     } else {
+
+
       const newPlayerList = [...playerList];
-      newPlayerList.push(data);
+
+      let targetColor: any;
+      let targetIndex: any;
+
+      colorState.map((color, index) => {
+        if (!color.used) {
+          targetColor = color.name;
+          targetIndex = index;
+        }
+      });
+
+      const newColorState = [...colorState];
+      newColorState[targetIndex].used = true;
+      setColorState(newColorState);
+
+      const newDataObj = {...data, color: targetColor}
+      newPlayerList.push(newDataObj);
+
       setPlayerList(newPlayerList);
     }
   };
 
   const handleRemoveClick = (data: any) => {
+
+    const targetColor = data.color;
+    const targetIndex = colorState.findIndex(e => e.name === targetColor);
+
+    const newColorState = [...colorState];
+    newColorState[targetIndex].used = false;
+    setColorState(newColorState);
+
     const newPlayerList = playerList.filter(
-      (player) => player.playerid !== data.playerid
+      (player) => player._source.player.playerid !== data._source.player.playerid
     );
     setPlayerList(newPlayerList);
   };
@@ -77,39 +165,36 @@ const CompareContainer = () => {
       {playerList && playerList.length > 0 ?
         <div className="min-h-[100px] border border-gray-300 rounded-md mt-2 grid grid-cols-4 p-5 w-full gap-2">
           {playerList &&
-            playerList.map((data) => (
+            playerList.map((player) => (
               <ComparePlayerCard
-                key={data.playerid}
-                data={data}
+                key={player._source.player.playerid}
+                player={player}
                 onHandleRemoveClick={handleRemoveClick}
               />
             ))}
         </div> : null}
-      {/* <div className="min-h-[100px] border border-gray-300 rounded-md mt-2 grid grid-cols-4 p-5 w-full gap-2">
-        {playerList &&
-          playerList.map((data) => (
-            <ComparePlayerCard
-              key={data.playerid}
-              data={data}
-              onHandleRemoveClick={handleRemoveClick}
-            />
-          ))}
-      </div> */}
+    
 
       {/* 선수 비교 */}
       <div className="flex justify-center w-full mt-2 border border-gray-300 rounded-md p-3">
         {/* Left */}
         <div className="flex flex-col w-[60%] border-r border-gray-300 mr-2 justify-center">
+
+
           {/* RadarChart */}
           <div className="w-full h-[420px] p-2">
             {mockdata && (
               <ParentSize>
                 {({ width, height }) => (
-                  <RadarChart width={width} height={height} data={mockdata} />
+                  <CompareRaderChart width={width} height={height} data={radarChartData} />
                 )}
               </ParentSize>
             )}
           </div>
+
+
+
+
         </div>
 
         {/* Right */}
@@ -148,7 +233,7 @@ const CompareContainer = () => {
               data.hits.map((player: any) => (
                 <CompareSearchResultCard
                   key={player._source.player.playerid}
-                  data={player._source.player}
+                  player={player}
                   onHandleAddClick={handleAddClick}
                 />
               ))}

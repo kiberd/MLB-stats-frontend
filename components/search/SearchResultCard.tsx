@@ -18,19 +18,23 @@ import { CustomTooltip } from "../CustomTooltip";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
 import useCleansPlayer from "../../hooks/useCleansPlayer";
-import useSummaryPlayer from "../../hooks/useSummaryPlayer";
+// import useSummaryPlayer from "../../hooks/useSummaryPlayer";
+import { summaryPlayer } from "../../utils/calc";
 
 interface SearchResultCardProps {
   player: any;
 }
 
 const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
+
+
   const [indicator, setIndicator] = useState<string>("avg");
   const [type, setType] = useState<string>("batting");
   const [validate, setValidate] = useState<boolean>(true);
 
   const lineChartData = useCleansPlayer(player, indicator);
-  const summaryData = useSummaryPlayer(player, type);
+  // const summaryData = useSummaryPlayer(player, type);
+  const summaryData = summaryPlayer(player, indicator);
 
 
   useEffect(() => {

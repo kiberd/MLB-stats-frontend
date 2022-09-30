@@ -5,7 +5,7 @@
 // Contact : 타율 (max: 0.4)
 // OnBase : 출루율 (max: 0.6)
 
-export const getPowerValue = (battingRecord: any) => {
+const getPowerValue = (battingRecord: any) => {
   const powerValue =
     (battingRecord.hits +
       battingRecord.doubles +
@@ -16,13 +16,13 @@ export const getPowerValue = (battingRecord: any) => {
   return powerValue < 0.863 ? powerValue / 0.863 : 1;
 };
 
-export const getAvgValue = (battingRecord: any) => {
+const getAvgValue = (battingRecord: any) => {
   const avgValue = Number(battingRecord.avg);
 
   return avgValue < 0.426 ? avgValue / 0.426 : 1;
 };
 
-export const getOPSValue = (battingRecord: any) => {
+const getOPSValue = (battingRecord: any) => {
   const opsValue = Number(
     getOnBaseValue(battingRecord) + getPowerValue(battingRecord)
   );
@@ -31,7 +31,7 @@ export const getOPSValue = (battingRecord: any) => {
   return opsValue < 2 ? opsValue / 2 : 1;
 };
 
-export const getOnBaseValue = (battingRecord: any) => {
+const getOnBaseValue = (battingRecord: any) => {
   const onBaseValue =
     (battingRecord.hits + battingRecord.bb + battingRecord.hbp) /
     (battingRecord.ab +
@@ -41,3 +41,32 @@ export const getOnBaseValue = (battingRecord: any) => {
 
   return onBaseValue < 0.6 ? onBaseValue / 0.6 : 1;
 };
+
+
+
+export const summaryPlayer = (player: any, type: string) => {
+
+  const battingRecord = player._source.player.career_batting;
+
+  return (
+    [
+      {
+        letter: "OnBase",
+        value: getOnBaseValue(battingRecord).toFixed(3),
+      },
+      {
+        letter: "OPS",
+        value: getOPSValue(battingRecord).toFixed(3),
+      },
+      {
+        letter: "Power",
+        value: getPowerValue(battingRecord).toFixed(3),
+      },
+      {
+        letter: "Contact",
+        value: getAvgValue(battingRecord).toFixed(3),
+      },
+    ]
+  )
+};
+

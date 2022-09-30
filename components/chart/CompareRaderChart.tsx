@@ -222,9 +222,9 @@ export default function RadarChart({
                                     verticalAnchor="middle"
                                     y={points[i].y}
                                     x={points[i].x}
-                                    dx={points[i].x / 4}
-                                    dy={points[i].y / 10}
-                                    className={"text-sm font-semibold"}
+                                    dx={points[i].x / 6}
+                                    dy={points[i].y / 12}
+                                    className={"text-xs tablet:text-sm font-semibold"}
                                 >
                                     {data[0]?.data[i].letter}
                                 </Text>

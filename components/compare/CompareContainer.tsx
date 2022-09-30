@@ -108,7 +108,7 @@ const CompareContainer = () => {
       alert("선수비교 목록에 이미 있습니다.");
     } else if (!isValid) {
       alert("분석할 데이터가 부족합니다.")
-    } else if (playerList.length === 4){
+    } else if (playerList.length === 4) {
       alert("최대 선수 비교 수는 4명입니다.")
     } else {
 
@@ -129,7 +129,7 @@ const CompareContainer = () => {
       newColorState[targetIndex].used = true;
       setColorState(newColorState);
 
-      const newDataObj = {...data, color: targetColor}
+      const newDataObj = { ...data, color: targetColor }
       newPlayerList.push(newDataObj);
 
       setPlayerList(newPlayerList);
@@ -158,14 +158,62 @@ const CompareContainer = () => {
         <span className="text-3xl font-bold">Comparison tool</span>
       </div>
 
-      {
-        playerList.length === 0 ? <div className="flex justify-center items-center text-gray-400 text-sm my-4 py-4 h-full">비교할 선수를 추가해주세요.</div> : null
-      }
+      {playerList.length === 0 ? <div className="hidden tablet:flex justify-center items-center text-gray-400 text-sm my-4 py-4 h-full">비교할 선수를 추가해주세요.</div> : null}
+
+
+      {/* 모바일 용 선수 검색 */}
+      <fieldset className="border border-gray-300 rounded-md mt-2 p-1" >
+      <legend className="font-semibold text-gray-700 p-2">Search Player</legend>
+      <div className="tablet:hidden flex flex-col w-full tablet:w-[40%] rounded-md p-1">
+
+
+        {/* SearchInput */}
+        <div className="flex items-center mb-2">
+          <input
+            type="text"
+            className="w-full px-3 py-1 tablet:mr-2 text-base font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 rounded-md outline-none tablet:w-auto "
+            placeholder="선수 검색"
+            onChange={handleInputChange}
+          />
+        </div>
+
+        {/* SearchResult */}
+        <div className=" h-[130px] tablet:h-96 overflow-auto border border-gray-300 rounded-md overscroll-contain">
+          {!isLoading && !isFetching && !data ? (
+            <div className="flex items-center justify-center w-full h-full text-sm text-gray-400">
+              검색어를 입력해주세요.
+            </div>
+          ) : null}
+
+          {data && data.hits.length === 0 ? (
+            <div className="flex items-center justify-center w-full h-full text-sm text-gray-400">
+              일치하는 항목이 없습니다.
+            </div>
+          ) : null}
+
+          {isLoading ? (
+            <div className="flex items-center justify-center w-full h-full text-sm text-gray-400">
+              <ClipLoader color={"#115E59"} loading={true} size={50} />
+            </div>
+          ) : null}
+
+          {data &&
+            data.hits.map((player: any) => (
+              <CompareSearchResultCard
+                key={player._source.player.playerid}
+                player={player}
+                onHandleAddClick={handleAddClick}
+              />
+            ))}
+        </div>
+      </div>
+      </fieldset>
+
 
       {/* 비교 리스트 */}
       {playerList && playerList.length > 0 ?
-        <fieldset className="hidden min-h-[100px] border border-gray-300 rounded-md mt-2 tablet:grid tablet:grid-cols-2 laptop:grid-cols-4 p-5 w-full gap-2">
-          <legend className="font-semibold text-gray-600">Compare List</legend>
+        <fieldset className=" h-36 overflow-auto tablet:h-auto min-h-[100px] border border-gray-300 rounded-md mt-2 tablet:grid tablet:grid-cols-2 laptop:grid-cols-4 p-5 w-full gap-2">
+          <legend className="font-semibold text-gray-700 p-2">Compare List</legend>
           {playerList &&
             playerList.map((player) => (
               <ComparePlayerCard
@@ -175,15 +223,15 @@ const CompareContainer = () => {
               />
             ))}
         </fieldset> : null}
-    
+
 
       {/* 선수 비교 */}
-      <div className="flex flex-col tablet:flex-row justify-center w-full mt-2 border border-gray-300 rounded-md p-3">
+      <div className="flex flex-col-reverse tablet:flex-row justify-center w-full mt-2 border border-gray-300 rounded-md p-3">
 
 
 
         {/* Left */}
-        <div className="flex flex-col w-full tablet:w-[60%] border-r border-gray-300 mr-2 justify-center">
+        <div className="flex flex-col w-full tablet:w-[60%] tablet:border-r tablet:border-gray-300 tablet:mr-2 justify-center">
 
 
           {/* RadarChart */}
@@ -203,19 +251,21 @@ const CompareContainer = () => {
         </div>
 
         {/* Right */}
-        <div className="flex flex-col w-full tablet:w-[40%] rounded-md p-1">
+        <div className="hidden tablet:flex flex-col w-full tablet:w-[40%] rounded-md p-1">
+
+
           {/* SearchInput */}
           <div className="flex items-center mb-2">
             <input
               type="text"
-              className="w-full px-3 py-1 mr-2 text-base font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 rounded-md outline-none tablet:w-auto "
+              className="w-full px-3 py-1 tablet:mr-2 text-base font-normal text-gray-700 transition ease-in-out bg-white border border-gray-300 rounded-md outline-none tablet:w-auto "
               placeholder="선수 검색"
               onChange={handleInputChange}
             />
           </div>
 
           {/* SearchResult */}
-          <div className="h-96 overflow-auto border border-gray-300 rounded-md overscroll-contain">
+          <div className=" h-52 tablet:h-96 overflow-auto border border-gray-300 rounded-md overscroll-contain">
             {!isLoading && !isFetching && !data ? (
               <div className="flex items-center justify-center w-full h-full text-sm text-gray-400">
                 검색어를 입력해주세요.

@@ -17,7 +17,7 @@ const ComparePlayerCard: React.FC<ComparePlayerCardProps> = ({
   };
 
   return (
-    <div className="px-4 py-2 border border-gray-300 rounded-md">
+    <div className="my-2 tablet:my-0 px-4 py-2 border border-gray-300 rounded-md">
       <div className="flex flex-col">
         <div className="flex items-center justify-between mb-2">
           <span className="mb-1 text-base font-semibold">{player._source.player.name}</span>

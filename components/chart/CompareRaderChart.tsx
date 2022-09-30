@@ -166,17 +166,15 @@ export default function RadarChart({
 
     return width < 10 ? null : (
         <div>
-
-
-            <div className="fixed mt-4 ml-4">
+            <div className=" absolute mt-4 ml-4">
                 <div className="flex-col">
                     {
                         data && data.map((d: any) => {
-                            // console.log(d.color);
-                            // const color = d.color;
+
+                            const boxStyle = `w-4 h-4 border border-white mr-2 bg-[${d.color}]`;
                             return (
                                 <div className="flex items-center my-1" key={d.name}>
-                                    <div className={`w-4 h-4 border border-white bg-[${d.color}] mr-2`}></div>
+                                    <div className={`${boxStyle}`}></div>
                                     <span className=" text-gray-700 font-semibold text-sm">{d.name}</span>
                                 </div>
                             )
@@ -188,9 +186,14 @@ export default function RadarChart({
 
 
             <svg width={width} height={height}>
+
+           
+
                 <rect fill={background} width={width} height={height} rx={14} />
 
                 <Group top={height / 2} left={width / 2}>
+
+                
 
                     {[...new Array(levels)].map((_, i) => (
                         <LineRadial
@@ -221,7 +224,7 @@ export default function RadarChart({
                                     x={points[i].x}
                                     dx={points[i].x / 4}
                                     dy={points[i].y / 10}
-                                    className={"text-xs"}
+                                    className={"text-sm font-semibold"}
                                 >
                                     {data[0]?.data[i].letter}
                                 </Text>

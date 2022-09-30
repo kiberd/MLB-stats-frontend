@@ -34,7 +34,7 @@ const CompareSearchResultCard: React.FC<CompareSearchResultCardProps> = ({
         <button className="border border-gray-100 rounded-md bg-[#115E59] text-white text-[10px] h-[30px] px-4 mr-4" onClick={handleAddClick}>
           추가
         </button>
-        <ArrowsPointingOutIcon className="w-4 h-4" />
+        {/* <ArrowsPointingOutIcon className="w-4 h-4 cursor-pointer" /> */}
       </div>
     </div>
   );

@@ -159,11 +159,13 @@ const CompareContainer = () => {
       </div>
 
       {
-        playerList.length === 0 ? <div className="flex justify-center items-center text-gray-400 text-sm my-4 py-4">비교할 선수를 추가해주세요.</div> : null
+        playerList.length === 0 ? <div className="flex justify-center items-center text-gray-400 text-sm my-4 py-4 h-full">비교할 선수를 추가해주세요.</div> : null
       }
 
+      {/* 비교 리스트 */}
       {playerList && playerList.length > 0 ?
-        <div className="min-h-[100px] border border-gray-300 rounded-md mt-2 grid grid-cols-4 p-5 w-full gap-2">
+        <fieldset className="hidden min-h-[100px] border border-gray-300 rounded-md mt-2 tablet:grid tablet:grid-cols-2 laptop:grid-cols-4 p-5 w-full gap-2">
+          <legend className="font-semibold text-gray-600">Compare List</legend>
           {playerList &&
             playerList.map((player) => (
               <ComparePlayerCard
@@ -172,13 +174,16 @@ const CompareContainer = () => {
                 onHandleRemoveClick={handleRemoveClick}
               />
             ))}
-        </div> : null}
+        </fieldset> : null}
     
 
       {/* 선수 비교 */}
-      <div className="flex justify-center w-full mt-2 border border-gray-300 rounded-md p-3">
+      <div className="flex flex-col tablet:flex-row justify-center w-full mt-2 border border-gray-300 rounded-md p-3">
+
+
+
         {/* Left */}
-        <div className="flex flex-col w-[60%] border-r border-gray-300 mr-2 justify-center">
+        <div className="flex flex-col w-full tablet:w-[60%] border-r border-gray-300 mr-2 justify-center">
 
 
           {/* RadarChart */}
@@ -198,7 +203,7 @@ const CompareContainer = () => {
         </div>
 
         {/* Right */}
-        <div className="flex flex-col w-[40%] rounded-md p-1">
+        <div className="flex flex-col w-full tablet:w-[40%] rounded-md p-1">
           {/* SearchInput */}
           <div className="flex items-center mb-2">
             <input
@@ -241,14 +246,13 @@ const CompareContainer = () => {
         </div>
       </div>
 
-      <div className="w-full h-96 border border-gray-300 rounded-md mt-2 overscroll-contain overflow-auto">
-        {/* <h2 className="text-lg p-4 font-bold">통산기록</h2> */}
+      {/* <div className="w-full h-96 border border-gray-300 rounded-md mt-2 overscroll-contain overflow-auto">
         <ParentSize>
           {({ width, height }) => (
             <HorizontalBarChart width={width} height={height} />
           )}
         </ParentSize>
-      </div>
+      </div> */}
     </>
   );
 };

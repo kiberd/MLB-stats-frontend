@@ -20,4 +20,16 @@ module.exports = {
   plugins: [
     require('@tailwindcss/line-clamp'),
   ],
+  safelist: [
+    'text-2xl',
+    'text-3xl',
+    'bg-[blue]',
+    'bg-[red]',
+    'bg-[orange]',
+    'bg-[green]',
+    {
+      pattern: /bg-[(red|green|blue|orange)]/,
+      variants: ['lg', 'hover', 'focus', 'lg:hover'],
+    },
+  ],
 }

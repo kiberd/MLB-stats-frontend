@@ -162,9 +162,9 @@ const CompareContainer = () => {
 
 
       {/* 모바일 용 선수 검색 */}
-      <fieldset className="border border-gray-300 rounded-md mt-2 p-1" >
+      <fieldset className="tablet:hidden border border-gray-300 rounded-md mt-2 p-1" >
       <legend className="font-semibold text-gray-700 p-2">Search Player</legend>
-      <div className="tablet:hidden flex flex-col w-full tablet:w-[40%] rounded-md p-1">
+      <div className="flex flex-col w-full tablet:w-[40%] rounded-md p-1">
 
 
         {/* SearchInput */}

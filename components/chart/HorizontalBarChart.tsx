@@ -29,7 +29,7 @@ function max<D>(arr: D[], fn: (d: D) => number) {
   return Math.max(...arr.map(fn));
 }
 
-const data = cityTemperature.slice(0, 4);
+const data = cityTemperature.slice(0, 10);
 
 // const data = [
 //   {

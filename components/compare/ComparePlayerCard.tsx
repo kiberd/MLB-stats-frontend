@@ -17,7 +17,7 @@ const ComparePlayerCard: React.FC<ComparePlayerCardProps> = ({
   };
 
   return (
-    <div className="my-2 tablet:my-0 px-4 py-2 border border-gray-300 rounded-md">
+    <div className="mb-1 tablet:my-0 px-4 py-2 border border-gray-300 rounded-md">
       <div className="flex flex-col">
         <div className="flex items-center justify-between mb-2">
           <span className="mb-1 text-base font-semibold">{player._source.player.name}</span>
@@ -28,7 +28,6 @@ const ComparePlayerCard: React.FC<ComparePlayerCardProps> = ({
             제거
           </button>
         </div>
-
         <div className="flex items-center">
           <span className="text-[10px] text-gray-400">
             {player._source.player.batting.filter((x: any) => x.stint == 1).length}년 &#183; 타율

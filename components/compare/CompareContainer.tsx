@@ -222,12 +222,13 @@ const CompareContainer = () => {
             )}
           </div>
         </div>
-        <div className="tablet:flex flex-col w-full tablet:w-[40%] rounded-md p-1">
+        <div className="tablet:flex flex-col w-full h-[420px] overflow-auto tablet:w-[40%] rounded-md p-1">
           <ParentSize>
             {({ width, height }) => (
               <HorizontalBarChart width={width} height={height} />
             )}
           </ParentSize>
+          {/* <HorizontalBarChart width={width} height={height} /> */}
         </div>
       </div>
     </>

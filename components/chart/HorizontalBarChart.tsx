@@ -29,30 +29,46 @@ function max<D>(arr: D[], fn: (d: D) => number) {
   return Math.max(...arr.map(fn));
 }
 
-const data = cityTemperature.slice(0, 10);
+// const data = cityTemperature.slice(0, 10);
 
-// const data = [
-//   {
-//     indicator : "Homeruns",
-//     player1 : 12,
-//     player2: 49,
-//     player3: 23
-//   },
-//   {
-//     indicator : "Hits",
-//     player1 : 12,
-//     player2: 29,
-//     player3: 23
-//   }
+const data = [
+  {
+    indicator : "OPS",
+    player1 : 12,
+    player2: 49,
+    player3: 23,
+    player4: 23,
+  },
+  {
+    indicator : "OnBase",
+    player1 : 12,
+    player2: 29,
+    player3: 23,
+    player4: 23,
+  },
+  {
+    indicator : "Power",
+    player1 : 12,
+    player2: 21,
+    player3: 2,
+    player4: 23,
+  },
+  {
+    indicator : "Contact",
+    player1 : 12,
+    player2: 29,
+    player3: 14,
+    player4: 23,
+  }
 
-// ]
+]
 
-// console.log(data);
+console.log(data);
 const keys = Object.keys(data[0]).filter((d) => d !== 'date') as CityName[];
 
 // accessors
-const getDate = (d: CityTemperature) => d.date;
-// const getDate = (d: any) => d.indicator;
+// const getDate = (d: CityTemperature) => d.date;
+const getDate = (d: any) => d.indicator;
 
 // scales
 const dateScale = scaleBand({
@@ -64,7 +80,8 @@ const cityScale = scaleBand({
   padding: 0.1,
 });
 const tempScale = scaleLinear<number>({
-  domain: [0, max(data, (d) => max(keys, (key) => Number(d[key])))],
+  // domain: [0, max(data, (d) => max(keys, (key) => Number(d[key])))],
+  domain: [0, 100],
 });
 const colorScale = scaleOrdinal<string, string>({
   domain: keys,
@@ -114,7 +131,7 @@ export default function HorizontalBarChart({
                     width={bar.width}
                     height={bar.height}
                     // height={20}
-                    fill={bar.color}
+                    fill={"red"}
                     rx={4}
                     onClick={() => {
                       if (events) alert(`${bar.key} (${bar.value}) - ${JSON.stringify(bar)}`);
@@ -125,18 +142,20 @@ export default function HorizontalBarChart({
             ))
           }
         </BarGroupHorizontal>
+
+        
         <AxisLeft
           scale={dateScale}
           // stroke={green}
           // tickStroke={green}
           // tickFormat={formatDate}
           hideAxisLine
-          tickLabelProps={() => ({
-            // fill: green,
-            fontSize: 11,
-            textAnchor: 'end',
-            dy: '0.33em',
-          })}
+          // tickLabelProps={() => ({
+          //   // fill: green,
+          //   fontSize: 11,
+          //   textAnchor: 'end',
+          //   // dy: '1em',
+          // })}
         />
       </Group>
     </svg>

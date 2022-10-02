@@ -231,7 +231,7 @@ const CompareContainer = () => {
         </fieldset>
       ) : null}
       <div className="flex flex-col justify-center w-full p-3 mt-2 border border-gray-300 rounded-md tablet:flex-row">
-        <div className="flex flex-col w-full tablet:w-[60%] tablet:border-r tablet:border-gray-300 tablet:mr-2 justify-center">
+        <div className="flex flex-col w-full tablet:w-[50%] tablet:border-r tablet:border-gray-300 tablet:mr-2 justify-center">
         <span className="p-2 text-sm text-gray-400">종합 점수</span>
           <div className="w-full h-[420px] p-2">
             {radarChartData && (
@@ -248,7 +248,7 @@ const CompareContainer = () => {
           </div>
         </div>
 
-        <div className="tablet:flex flex-col w-full h-[450px] tablet:w-[40%]">
+        <div className="tablet:flex flex-col w-full h-[450px] tablet:w-[50%]">
         <span className="p-2 mt-1 text-sm text-gray-400">시즌 평균 기록</span>
           {summaryBarChartData && summaryBarChartData.playerInfoData.length > 0 ? (
             <ParentSize>

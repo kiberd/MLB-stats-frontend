@@ -9,7 +9,6 @@ import {
     defaultStyles,
 } from "@visx/tooltip";
 
-import { format } from 'd3-format';
 import { scaleLinear, scaleOrdinal, scaleThreshold, scaleQuantile } from '@visx/scale';
 import { GlyphStar, GlyphWye, GlyphTriangle, GlyphDiamond } from '@visx/glyph';
 import {
@@ -101,24 +100,17 @@ export default function RadarChart({
 
     const [polygonPointsList, setPolygonPointsList] = useState<any[]>([]);
 
-    // useEffect(() => {
-    //     console.log(polygonPointsList);
-    // } ,[polygonPointsList])
-
     useEffect(() => {
 
         const newPolygonPointsList: any[] = [];
-        // console.log(data);
 
         data.map((value: any) => {
 
             const newPolygonPoints = genPolygonPoints(value.data, (d) => yScale(d) ?? 0, y);
-
             const obj = {
                 color: value.color,
                 polygonData: newPolygonPoints
             }
-
             newPolygonPointsList.push(obj);
         });
 
@@ -166,7 +158,7 @@ export default function RadarChart({
 
     return width < 10 ? null : (
         <div>
-            <div className=" absolute mt-4 ml-4">
+            <div className="absolute mt-4 ml-4 ">
                 <div className="flex-col">
                     {
                         data && data.map((d: any) => {
@@ -175,7 +167,7 @@ export default function RadarChart({
                             return (
                                 <div className="flex items-center my-1" key={d.name}>
                                     <div className={`${boxStyle}`}></div>
-                                    <span className=" text-gray-700 font-semibold text-sm">{d.name}</span>
+                                    <span className="text-sm font-semibold text-gray-700 ">{d.name}</span>
                                 </div>
                             )
                         })

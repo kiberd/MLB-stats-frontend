@@ -91,8 +91,6 @@ export const makeBarChartData = (playerList: any) => {
 
   playerList.map((player: any) => {
 
-    console.log(player);
-
     const name = player._source.player.name;
 
     const avg = player._source.player.career_batting.avg;

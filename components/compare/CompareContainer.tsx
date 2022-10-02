@@ -248,8 +248,8 @@ const CompareContainer = () => {
           </div>
         </div>
 
-        <div className="tablet:flex flex-col w-full h-[450px] tablet:w-[40%] justify-center">
-        <span className="p-2 mt-4 text-sm text-gray-400">시즌 평균 기록</span>
+        <div className="tablet:flex flex-col w-full h-[450px] tablet:w-[40%]">
+        <span className="p-2 mt-1 text-sm text-gray-400">시즌 평균 기록</span>
           {summaryBarChartData && summaryBarChartData.playerInfoData.length > 0 ? (
             <ParentSize>
               {({ width, height }) => (

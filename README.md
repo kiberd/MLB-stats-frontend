@@ -7,7 +7,7 @@ https://mlb-stats-frontend.vercel.app/
 
 ![diagram](https://user-images.githubusercontent.com/34852597/193076517-141717da-5656-41f7-adf1-b54768ecab72.png)
 
-======================
+---
 
 ### 기능
 - **Elastic search 의 fuzzy api 를 이용한 선수 검색 기능 (완벽히 맞지 않아도 유사도 순으로 검색결과 제공)**
@@ -23,7 +23,7 @@ https://mlb-stats-frontend.vercel.app/
 
 ![image](https://user-images.githubusercontent.com/34852597/193813647-c8cbe3f1-3415-4445-9cd5-ef4ab23a9a6c.png)
 
-======================
+---
 
 ### Description 
 - **Next.js를 활용한 정적 페이지 생성 (index, search, detail, compare)**
@@ -31,7 +31,7 @@ https://mlb-stats-frontend.vercel.app/
 - **React-query를 활용한 server 상태 관리 및 caching**
 - **시각화 라이브러리 중 하나인 Visx를 사용하여 각종 데이터 시각화**
 
-======================
+---
 
 ### Stack
 - Typescript

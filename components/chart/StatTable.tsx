@@ -17,20 +17,20 @@ const StatTable: React.FC<StatTableProps> = ({ columns, data }) => {
   } = useTable({ columns, data });
 
   return (
-    <table {...getTableProps()}>
-      <thead>
+    <table {...getTableProps()} className="">
+      <thead className="">
         {headerGroups.map((headerGroup) => {
           const { key, ...restHeaderGroupProps } =
             headerGroup.getHeaderGroupProps();
           return (
-            <tr key={key} {...restHeaderGroupProps}>
+            <tr key={key} {...restHeaderGroupProps} className="sticky top-0 left-0 z-10 bg-slate-300">
               {headerGroup.headers.map((column, index) => {
                 const { key, ...restColumn } = column.getHeaderProps();
                 return (
                   <th
                     key={key}
                     {...restColumn}
-                    className={`p-2 min-w-[80px] desktop:min-w-[60px] ${index === 0 ? "font-bold sticky left-0 bg-slate-200 border-r border-b border-t border-black" : "border border-black"}`}
+                    className={`p-2 min-w-[80px] desktop:min-w-[60px] ${index === 0 ? "font-bold sticky left-0 top-0 bg-slate-400 border-r border-b border-black" : " border-r border-black"}`}
                   >
                     {column.render("Header")}
                   </th>

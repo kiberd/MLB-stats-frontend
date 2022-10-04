@@ -147,7 +147,7 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
 
         {/* <div className="w-[48vw] border-teal-800 border-b-[3px] mt-3"></div> */}
 
-        <div className="flex w-full mt-4 overflow-auto desktop:justify-center">
+        <div className="flex w-full mt-4 overflow-auto desktop:justify-center h-[50vh] overscroll-contain">
           {rowData && <StatTable columns={columns} data={rowData} />}
         </div>
       </div>

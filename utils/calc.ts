@@ -1,9 +1,9 @@
 // 점수 계산 (max 수치는 역대 최고기록 기준)
 
-// Power : 장타율 (max : 4)
-// Speed : 도루 (max: 130)
-// Contact : 타율 (max: 0.4)
-// OnBase : 출루율 (max: 0.6)
+// Power : 장타율 (max : 0.690)
+// OPS : ops (max: 1.164)
+// Contact : 타율 (max: 0.366)
+// OnBase : 출루율 (max: 0.482)
 
 const getPowerValue = (battingRecord: any) => {
   const powerValue =
@@ -13,22 +13,36 @@ const getPowerValue = (battingRecord: any) => {
       battingRecord.homeruns * 3) /
     battingRecord.ab;
 
-  return powerValue < 0.863 ? powerValue / 0.863 : 1;
+    //0.863
+  return powerValue < 0.7 ? powerValue / 0.7 : 1;
 };
 
 const getAvgValue = (battingRecord: any) => {
   const avgValue = Number(battingRecord.avg);
 
-  return avgValue < 0.426 ? avgValue / 0.426 : 1;
+  return avgValue < 0.367 ? avgValue / 0.367 : 1;
 };
 
 const getOPSValue = (battingRecord: any) => {
-  const opsValue = Number(
-    getOnBaseValue(battingRecord) + getPowerValue(battingRecord)
-  );
 
-  // return opsValue < 1.422 ? opsValue / 1.422 : 1;
-  return opsValue < 2 ? opsValue / 2 : 1;
+  const powerValue =
+    (battingRecord.hits +
+      battingRecord.doubles +
+      battingRecord.triples * 2 +
+      battingRecord.homeruns * 3) /
+    battingRecord.ab;
+
+  const onBaseValue =
+    (battingRecord.hits + battingRecord.bb + battingRecord.hbp) /
+    (battingRecord.ab +
+      battingRecord.bb +
+      battingRecord.hbp +
+      battingRecord.sf);
+
+
+  const opsValue = Number(powerValue + onBaseValue);
+
+  return opsValue < 1.165 ? opsValue / 1.165 : 1;
 };
 
 const getOnBaseValue = (battingRecord: any) => {
@@ -39,7 +53,8 @@ const getOnBaseValue = (battingRecord: any) => {
       battingRecord.hbp +
       battingRecord.sf);
 
-  return onBaseValue < 0.6 ? onBaseValue / 0.6 : 1;
+
+  return onBaseValue < 0.483 ? onBaseValue / 0.483 : 1;
 };
 
 export const summaryPlayer = (player: any, type: string) => {
@@ -102,12 +117,12 @@ export const makeBarChartData = (playerList: any) => {
 
     const years = player._source.player.batting.filter((x: any) => x.stint == 1).length;
     
-    barChartData[0][name] = Number(avg) / 0.426;
-    barChartData[1][name] = hits / years / 262
-    barChartData[2][name] = doubles / years / 67;
-    barChartData[3][name] = triples / years / 36;
-    barChartData[4][name] = homeruns / years / 73;
-    barChartData[5][name] = homeruns / years / 191;
+    barChartData[0][name] = Number(avg) / 0.367 * 100;
+    barChartData[1][name] = hits / 4198 * 100;
+    barChartData[2][name] = doubles / 792 * 100;
+    barChartData[3][name] = triples / 295 * 100;
+    barChartData[4][name] = homeruns / 762 * 100;
+    barChartData[5][name] = rbi / 2297 * 100;
 
   })
 

@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { cleanAverageString } from "../../utils/cleans";
 import Router, { useRouter } from "next/router";
-import {
-  AnimatedAxis,
-  AnimatedGrid,
-  AnimatedLineSeries,
-  Tooltip,
-  XYChart,
-} from "@visx/xychart";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import LineChart from "../chart/LineChart";
 import RadarChart from "../chart/RadarChart";
 import ListBox from "../ListBox";
 import { Switch } from "@headlessui/react";
-import { CustomTooltip } from "../CustomTooltip";
+// import { CustomTooltip } from "../CustomTooltip";
+import ReactTooltip from "react-tooltip";
 
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
@@ -26,16 +20,14 @@ interface SearchResultCardProps {
 }
 
 const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
-
-
   const [indicator, setIndicator] = useState<string>("avg");
   const [type, setType] = useState<string>("batting");
   const [validate, setValidate] = useState<boolean>(true);
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
   const lineChartData = useCleansPlayer(player, indicator);
   // const summaryData = useSummaryPlayer(player, type);
   const summaryData = summaryPlayer(player, indicator);
-
 
   useEffect(() => {
     // 종합 데이터중 하나라도 이상한 값 (0 or max) 이 있으면 set validate false
@@ -64,24 +56,38 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
   return (
     <div className="py-3">
       <div className="flex p-6 border border-gray-300 rounded-md h-[300px]">
-
-        
         {/* Left Side */}
         <div className="w-full tablet:w-[35%] laptop:w-[30%] h-full tablet:border-r tablet:border-gray-300 tablet:pr-4">
           {/* Name */}
-          <div className="text-lg font-bold h-[10%] flex justify-between">
+          <div className="text-lg font-bold h-[10%] flex justify-between items-center">
             <span>{player._source.player.name}</span>
 
             <div className="flex items-center">
+              <div>
               <button
-                className="tablet:hidden border border-gray-100 rounded-lg bg-[#115E59] text-white text-[10px] px-2 mb-2"
+                className="tablet:hidden border border-gray-100 rounded-lg bg-[#115E59] text-white text-[10px] px-2 mr-1"
                 onClick={handleDetailClick}
               >
                 Detail
               </button>
-              {/* <CustomTooltip message="각 지표의 최대값은 역대 메이저리그 기록의 최대값 기준입니다.">
-                <InformationCircleIcon className="w-4 h-4 mr-2" />
-              </CustomTooltip> */}
+              </div>
+
+              <InformationCircleIcon
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+                className="w-4 h-4 mr-2"
+                data-for="result-description"
+                data-tip
+              />
+
+              {showTooltip ? (
+                <ReactTooltip
+                  id="result-description"
+                  getContent={(dataTip) =>
+                    "각 지표의 최대값은 역대 메이저리그 기록의 최대값 기준입니다."
+                  }
+                />
+              ) : null}
 
               {/* <Switch
                 checked={enabled}
@@ -104,7 +110,8 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
           <div className="h-[10%] flex items-center mb-1">
             <span className="text-xs text-gray-500">
               {
-                player._source.player.batting.filter((x: any) => x.stint == 1).length
+                player._source.player.batting.filter((x: any) => x.stint == 1)
+                  .length
               }{" "}
               년 &#183;{"   "}
             </span>
@@ -162,8 +169,6 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
             )}
           </div>
         </div>
-
-
       </div>
     </div>
   );

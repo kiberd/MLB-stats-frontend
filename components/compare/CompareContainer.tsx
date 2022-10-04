@@ -8,7 +8,8 @@ import useSearchPlayers from "../../hooks/useSearchPlayers";
 import ClipLoader from "react-spinners/ClipLoader";
 import HorizontalBarChart from "../chart/HorizontalBarChart";
 import { summaryPlayer, makeBarChartData } from "../../utils/calc";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon, InformationCircleIcon } from "@heroicons/react/24/solid";
+import ReactTooltip from "react-tooltip";
 
 const initColorState = [
   {
@@ -39,6 +40,9 @@ const CompareContainer = () => {
   const [colorState, setColorState] = useState(initColorState);
   const [searchResultVisible, setSearchResultVisible] =
     useState<boolean>(false);
+
+  const [radarTooltipShow, setRadarTooltipShow] = useState<boolean>(false);
+  const [chartTooltipShow, setChartTooltipShow] = useState<boolean>(false);
 
   const debouncedPlayerName = useQueryDebounce(playerName, 500);
 
@@ -76,8 +80,6 @@ const CompareContainer = () => {
       playerInfoData: playerInfoData,
       chartData: chartData,
     };
-
-    // console.log(barDataObj);
 
     setSummaryBarChartData(barDataObj);
   }, [playerList]);
@@ -231,8 +233,26 @@ const CompareContainer = () => {
         </fieldset>
       ) : null}
       <div className="flex flex-col justify-center w-full p-3 mt-2 border border-gray-300 rounded-md tablet:flex-row">
-        <div className="flex flex-col w-full tablet:w-[60%] tablet:border-r tablet:border-gray-300 tablet:mr-2 justify-center">
-        <span className="p-2 text-sm text-gray-400">종합 점수</span>
+        <div className="flex flex-col w-full border-b border-gray-300 pb-2 tablet:pb-0 tablet:w-[60%] tablet:border-b-0 tablet:border-r tablet:border-gray-300 tablet:mr-2 justify-center">
+          <div className="flex items-center justify-between">
+            <span className="p-2 text-sm text-gray-400">종합 점수</span>
+            <InformationCircleIcon
+              className="w-4 h-5 mr-4"
+              data-for="radar-description"
+              onMouseEnter={() => setRadarTooltipShow(true)}
+              onMouseLeave={() => setRadarTooltipShow(false)}
+              data-tip
+            />
+            {radarTooltipShow ? (
+              <ReactTooltip
+                id="radar-description"
+                getContent={(dataTip) =>
+                  "각 지표(타율, 장타율, 출루율, OPS) 의 최대값은 역대 메이저리그 기록의 최대값 기준입니다."
+                }
+              />
+            ) : null}
+          </div>
+
           <div className="w-full h-[420px] p-2">
             {radarChartData && (
               <ParentSize>
@@ -248,9 +268,28 @@ const CompareContainer = () => {
           </div>
         </div>
 
-        <div className="tablet:flex flex-col w-full h-[450px] tablet:w-[40%]">
-        <span className="p-2 mt-1 text-sm text-gray-400">시즌 평균 기록</span>
-          {summaryBarChartData && summaryBarChartData.playerInfoData.length > 0 ? (
+        <div className="tablet:flex flex-col w-full h-[450px] tablet:w-[40%] pt-2 tablet:pt-0">
+          <div className="flex items-center justify-between">
+            <span className="p-2 text-sm text-gray-400">통산 기록</span>
+            <InformationCircleIcon
+              className="w-4 h-5 mr-2"
+              onMouseEnter={() => setChartTooltipShow(true)}
+              onMouseLeave={() => setChartTooltipShow(false)}
+              data-for="chart-description"
+              data-tip
+            />
+            {chartTooltipShow ? (
+              <ReactTooltip
+                id="chart-description"
+                getContent={(dataTip) =>
+                  "각 지표는 통산기록 최고기록 기준 백분율 점수입니다."
+                }
+              />
+            ) : null}
+          </div>
+
+          {summaryBarChartData &&
+          summaryBarChartData.playerInfoData.length > 0 ? (
             <ParentSize>
               {({ width, height }) => (
                 <HorizontalBarChart

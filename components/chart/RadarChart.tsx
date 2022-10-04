@@ -1,11 +1,9 @@
 import React, { useState, useCallback } from "react";
 import { Group } from "@visx/group";
-import letterFrequency, { LetterFrequency, } from "@visx/mock-data/lib/mocks/letterFrequency";
+
 import {
   Tooltip,
-  TooltipWithBounds,
   useTooltip,
-  useTooltipInPortal,
   defaultStyles,
 } from "@visx/tooltip";
 import { scaleLinear } from "@visx/scale";
@@ -13,12 +11,9 @@ import { Point } from "@visx/point";
 import { Text } from "@visx/text";
 import { Line, LineRadial } from "@visx/shape";
 
-const data2 = letterFrequency.slice(0, 4);
-
 const orange = "#115E59";
 const pumpkin = "#115E59";
 const silver = "#d9d9d9";
-
 
 export const background = "#FAF7E9";
 
@@ -27,7 +22,6 @@ type TooltipData = string;
 const degrees = 360;
 
 const y = (d: { letter: string; value: number }) => d.value;
-const y2 = (d: LetterFrequency) => d.frequency;
 
 const genAngles = (length: number) =>
   [...new Array(length + 1)].map((_, i) => ({
@@ -128,20 +122,13 @@ export default function RadarChart({
   };
 
 
-
-
-
   // 동일한 설정값
   const webs = genAngles(data.length);
   const points = genPoints(data.length, radius);
   const zeroPoint = new Point({ x: 0, y: 0 });
 
-
   // 데이터 별로 달라지는 값
   const polygonPoints = genPolygonPoints(data, (d) => yScale(d) ?? 0, y);
-  const polygonPoints2 = genPolygonPoints(data2, (d) => yScale(d) ?? 0, y2);
-
-
 
   return width < 10 ? null : (
     <div>
@@ -188,11 +175,6 @@ export default function RadarChart({
             );
           })}
 
-
-
-
-
-
           <polygon
             points={polygonPoints?.pointString}
             fill={orange}
@@ -208,54 +190,13 @@ export default function RadarChart({
               r={4}
               fill={pumpkin}
               onMouseOver={(e: any) => {
-                handleMouseOver(
-                  e,
-                  point,
-                  `${data[i]?.letter}: ${data[i]?.value}`
-                );
+                handleMouseOver(e, point, `${data[i]?.letter}: ${data[i]?.value}`);
               }}
               onMouseOut={hideTooltip}
             />
           ))}
-
-          {/* <polygon
-            points={polygonPoints2?.pointString}
-            // fill={orange}
-            stroke={orange}
-            fillOpacity={0.3}
-            strokeWidth={1}
-          />
-          {polygonPoints2?.points.map((point, i) => (
-            <circle
-              key={`radar-point-${i}`}
-              cx={point.x}
-              cy={point.y}
-              r={4}
-              fill={pumpkin}
-              onMouseOver={(e: any) => {
-                handleMouseOver(
-                  e,
-                  point,
-                  `${data2[i]?.letter}: ${data2[i]?.frequency}`
-                );
-              }}
-              onMouseOut={hideTooltip}
-            />
-          ))} */}
-
-
-
-
-
-
-
-
         </Group>
-
-
       </svg>
-
-
       {tooltipOpen && tooltipTop && tooltipLeft && (
         <Tooltip
           key={Math.random()}
@@ -268,8 +209,6 @@ export default function RadarChart({
           </strong>
         </Tooltip>
       )}
-
-
     </div>
   );
 }

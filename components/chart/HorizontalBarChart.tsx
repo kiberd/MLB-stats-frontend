@@ -120,6 +120,7 @@ export default function HorizontalBarChart({
             y1Scale={playerScale}
             xScale={valueScale}
             color={colorScale}
+
           >
             {(barGroups) =>
               barGroups.map((barGroup) => (
@@ -157,13 +158,12 @@ export default function HorizontalBarChart({
 
           <AxisLeft
             scale={indicatorScale}
-            orientation="left"
             left={0}
             top={0}
             hideAxisLine
             tickLabelProps={() => ({
               fontSize: 13,
-              textAnchor: "end",
+              textAnchor: "end" ,
               dy: "4px",
               dx: "-3px",
             })}

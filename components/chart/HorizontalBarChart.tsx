@@ -135,16 +135,8 @@ export default function HorizontalBarChart({
                       y={bar.y}
                       width={bar.width}
                       height={bar.height}
-                      // height={20}
                       fill={data.playerInfoData[bar.index].color}
-                      rx={5}
-                      // onClick={() => {
-                      //   if (events)
-                      //     alert(
-                      //       `${bar.key} (${bar.value}) - ${JSON.stringify(bar)}`
-                      //     );
-                      // }}
-
+                      rx={0}
                       onMouseOver={(e: any) => {
                         handleMouseOver(e, `${bar.key} : ${bar.value.toFixed(0)}점`);
                       }}

@@ -1,24 +1,18 @@
 import React, { useState } from "react";
-import { Switch } from "@headlessui/react";
-import { CustomTooltip } from "../CustomTooltip";
-import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import StatTable from "../chart/StatTable";
 import useMakeTableData from "../../hooks/useMakeTableData";
-
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import LineChart from "../chart/LineChart";
 import useCleansPlayer from "../../hooks/useCleansPlayer";
 import ListBox from "../ListBox";
 // import XLSX from "xlsx";
-import * as XLSX from 'xlsx'
-
+import * as XLSX from "xlsx";
 
 interface DetailResultProps {
   data: any;
 }
 
 const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
-
   const [indicator, setIndicator] = useState<string>("avg");
   const [enabled, setEnabled] = useState<boolean>(true);
   const { columns, rowData } = useMakeTableData(data._source.player.batting);
@@ -29,14 +23,12 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
   };
 
   const handleExcelDownload = () => {
-
     const fileName = `${data._source.player.namefirst} ${data._source.player.namelast}`;
     const ws = XLSX.utils.json_to_sheet(rowData);
     const wb = XLSX.utils.book_new();
 
-    XLSX.utils.book_append_sheet(wb, ws, 'sheet1');
+    XLSX.utils.book_append_sheet(wb, ws, "sheet1");
     XLSX.writeFile(wb, `${fileName}.xlsx`);
-
   };
 
   return (
@@ -131,7 +123,16 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
           </div>
 
           {lineChartData && (
-            <LineChart data={lineChartData} indicator={indicator} />
+            <ParentSize>
+              {({ width, height }) => (
+                <LineChart
+                  data={lineChartData}
+                  indicator={indicator}
+                  width={width}
+                  height={height}
+                />
+              )}
+            </ParentSize>
           )}
         </div>
       </div>

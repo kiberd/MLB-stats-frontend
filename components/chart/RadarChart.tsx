@@ -134,9 +134,7 @@ export default function RadarChart({
     <div>
       <svg width={width} height={height}>
         <rect fill={background} width={width} height={height} rx={14} />
-
         <Group top={height / 2} left={width / 2}>
-
           {[...new Array(levels)].map((_, i) => (
             <LineRadial
               key={`web-${i}`}
@@ -150,7 +148,6 @@ export default function RadarChart({
               strokeLinecap="round"
             />
           ))}
-
           {[...new Array(data.length)].map((_, i) => {
             return (
               <>
@@ -174,7 +171,6 @@ export default function RadarChart({
               </>
             );
           })}
-
           <polygon
             points={polygonPoints?.pointString}
             fill={orange}

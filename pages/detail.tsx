@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
 import DetailResult from "../components/detail/DetailResult";
 import SearchLoading from "../components/search/SearchLoading";
-
-import PageLayout from "../components/PageLayout";
+import PageLayout from "../components/layout/PageLayout";
 
 import useSearchPlayerBatting from "../hooks/useSearchPlayerBatting";
 

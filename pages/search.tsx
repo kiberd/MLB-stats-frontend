@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
 import type { NextPage } from "next";
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
 
-import { useQuery } from "react-query";
-import { getPlayersInfo } from "../apis/api";
-
-import useQueryDebounce from "../hooks/useQueryDebounce";
 import useSearchPlayers from "../hooks/useSearchPlayers";
 
 import { NextRouter, useRouter } from "next/router";
 import { SearchPlayersParams } from "params";
 import SearchLoading from "../components/search/SearchLoading";
 import SearchResult from "../components/search/SearchResult";
-import PageLayout from "../components/PageLayout";
+import PageLayout from "../components/layout/PageLayout";
 
 const Search: NextPage = () => {
   const router: NextRouter = useRouter();

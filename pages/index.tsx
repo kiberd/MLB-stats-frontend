@@ -1,12 +1,8 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import stadium from "../public/stadium.jpeg";
-
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
 import Landing from "../components/Landing";
-import LandingLayout from "../components/LandingLayout";
+import LandingLayout from "../components/layout/LandingLayout";
 
 const Home: NextPage = () => {
   return (

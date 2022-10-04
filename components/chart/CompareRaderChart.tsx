@@ -1,31 +1,10 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Group } from "@visx/group";
-import letterFrequency, { LetterFrequency, } from "@visx/mock-data/lib/mocks/letterFrequency";
-import {
-    Tooltip,
-    TooltipWithBounds,
-    useTooltip,
-    useTooltipInPortal,
-    defaultStyles,
-} from "@visx/tooltip";
-
-import { scaleLinear, scaleOrdinal, scaleThreshold, scaleQuantile } from '@visx/scale';
-import { GlyphStar, GlyphWye, GlyphTriangle, GlyphDiamond } from '@visx/glyph';
-import {
-    Legend,
-    LegendLinear,
-    LegendQuantile,
-    LegendOrdinal,
-    LegendSize,
-    LegendThreshold,
-    LegendItem,
-    LegendLabel
-} from '@visx/legend';
-
+import { useTooltip } from "@visx/tooltip";
+import { scaleLinear } from '@visx/scale';
 import { Point } from "@visx/point";
 import { Text } from "@visx/text";
 import { Line, LineRadial } from "@visx/shape";
-
 
 export const background = "#FAF7E9";
 
@@ -82,7 +61,7 @@ export type RadarProps = {
     levels?: number;
 };
 
-export default function RadarChart({
+export default function CompareRadarChart({
     width,
     height,
     data,
@@ -90,20 +69,11 @@ export default function RadarChart({
     margin = defaultMargin,
 }: RadarProps) {
 
-    // console.log(data);
-
-    const orange = "#115E59";
-    const pumpkin = "#115E59";
     const silver = "#d9d9d9";
-
-
-
     const [polygonPointsList, setPolygonPointsList] = useState<any[]>([]);
 
     useEffect(() => {
-
         const newPolygonPointsList: any[] = [];
-
         data.map((value: any) => {
 
             const newPolygonPoints = genPolygonPoints(value.data, (d) => yScale(d) ?? 0, y);
@@ -134,11 +104,6 @@ export default function RadarChart({
 
     const {
         showTooltip,
-        hideTooltip,
-        tooltipOpen,
-        tooltipData,
-        tooltipLeft = 0,
-        tooltipTop = 0,
     } = useTooltip<TooltipData>({});
 
     const handleMouseOver = useCallback(
@@ -175,18 +140,9 @@ export default function RadarChart({
 
                 </div>
             </div>
-
-
             <svg width={width} height={height}>
-
-           
-
                 <rect fill={background} width={width} height={height} rx={14} />
-
                 <Group top={height / 2} left={width / 2}>
-
-                
-
                     {[...new Array(levels)].map((_, i) => (
                         <LineRadial
                             key={`web-${i}`}
@@ -223,7 +179,6 @@ export default function RadarChart({
                             </>
                         );
                     })}
-
                     {
                         polygonPointsList.map((data) => (
                             <>
@@ -242,25 +197,13 @@ export default function RadarChart({
                                         cy={point.y}
                                         r={1}
                                         fill={data.color}
-                                    // onMouseOver={(e: any) => {
-                                    //     handleMouseOver(
-                                    //         e,
-                                    //         point,
-                                    //         `${data[i]?.letter}: ${data[i]?.value}`
-                                    //     );
-                                    // }}
-                                    // onMouseOut={hideTooltip}
                                     />
                                 ))}
                             </>
                         ))
                     }
-
-
                 </Group>
             </svg>
-
-
         </div>
     );
 }

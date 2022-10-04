@@ -6,13 +6,11 @@ import LineChart from "../chart/LineChart";
 import RadarChart from "../chart/RadarChart";
 import ListBox from "../ListBox";
 import { Switch } from "@headlessui/react";
-// import { CustomTooltip } from "../CustomTooltip";
 import ReactTooltip from "react-tooltip";
 
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
 import useCleansPlayer from "../../hooks/useCleansPlayer";
-// import useSummaryPlayer from "../../hooks/useSummaryPlayer";
 import { summaryPlayer } from "../../utils/calc";
 
 interface SearchResultCardProps {
@@ -26,7 +24,6 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
   const lineChartData = useCleansPlayer(player, indicator);
-  // const summaryData = useSummaryPlayer(player, type);
   const summaryData = summaryPlayer(player, indicator);
 
   useEffect(() => {
@@ -64,12 +61,12 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
 
             <div className="flex items-center">
               <div>
-              <button
-                className="tablet:hidden border border-gray-100 rounded-lg bg-[#115E59] text-white text-[10px] px-2 mr-1"
-                onClick={handleDetailClick}
-              >
-                Detail
-              </button>
+                <button
+                  className="tablet:hidden border border-gray-100 rounded-lg bg-[#115E59] text-white text-[10px] px-2 mr-1"
+                  onClick={handleDetailClick}
+                >
+                  Detail
+                </button>
               </div>
 
               <InformationCircleIcon
@@ -165,7 +162,16 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
 
           <div className="h-[90%]">
             {lineChartData && (
-              <LineChart data={lineChartData} indicator={indicator} />
+              <ParentSize>
+                {({ width, height }) => (
+                  <LineChart
+                    data={lineChartData}
+                    indicator={indicator}
+                    width={width}
+                    height={height}
+                  />
+                )}
+              </ParentSize>
             )}
           </div>
         </div>

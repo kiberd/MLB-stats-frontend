@@ -2,6 +2,7 @@
 
 https://mlb-stats-frontend.vercel.app/
 
+
 ### 전체 어플리케이션 구조도
 
 ![diagram](https://user-images.githubusercontent.com/34852597/193076517-141717da-5656-41f7-adf1-b54768ecab72.png)

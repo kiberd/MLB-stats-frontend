@@ -24,6 +24,8 @@ https://mlb-stats-frontend.vercel.app/
 ### Description 
 - **Next.js를 활용한 정적 페이지 생성 (index, search, detail, compare)**
 - **각 페이지 별 반응형 레이아웃 구현**
+![image](https://user-images.githubusercontent.com/34852597/193814790-cd774774-183f-4096-9358-77f62f3d6d14.png)
+
 - **React-query를 활용한 server 상태 관리 및 caching**
 - **시각화 라이브러리 중 하나인 Visx를 사용하여 각종 데이터 시각화**
 

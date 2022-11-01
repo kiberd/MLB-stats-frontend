@@ -158,6 +158,7 @@ export default function RadarChart({
                   stroke={silver}
                 />
                 <Text
+                  key={`radar-text-${i}`}
                   textAnchor="middle"
                   verticalAnchor="middle"
                   y={points[i].y}

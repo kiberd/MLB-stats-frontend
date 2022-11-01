@@ -19,5 +19,7 @@ export const getPlayersBattingInfo = async (playerid: string | null) => {
     process.env.NEXT_PUBLIC_ENDPOINT + `/batting/` + playerid
   );
 
+  console.log(data);
+
   return data;
 };

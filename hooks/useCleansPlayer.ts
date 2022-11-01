@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 
-const useCleansPlayer = (player: any, indicator: string) => {
+export const useCleansPlayer = (player: any, indicator: string, type: string) => {
+
+
   const [cleansData, setCleansData] = useState<any>();
 
   useEffect(() => {
+
+    const targetIndicator = player._source.player[type];
     const indicatorArry: any = [];
 
-    player._source.player.batting.map((record: any) => {
+    targetIndicator?.map((record: any) => {
+
       const year = record.yearid.toString();
       const indi = Number(record[indicator]);
 
@@ -44,9 +49,10 @@ const useCleansPlayer = (player: any, indicator: string) => {
     });
 
     setCleansData(filterdIndicatorArry);
-  }, [indicator]);
+  }, [indicator, type]);
+
+  // console.log(cleansData);
 
   return cleansData;
 };
 
-export default useCleansPlayer;

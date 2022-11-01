@@ -10,12 +10,47 @@ const indicator = [
   { id: 4, name: "타석", value: "ab" },
 ];
 
-interface ListBoxProps {
-  onHandleIndicatorChange: any;
+interface Indicator {
+  id: number;
+  name: string;
+  value: string;
 }
 
-const ListBox: React.FC<ListBoxProps> = ({ onHandleIndicatorChange }) => {
-  const [selected, setSelected] = useState(indicator[0]);
+interface IndicatorObjType {
+  batting: Indicator[];
+  pitching: Indicator[];
+}
+
+
+const indicatorMap: IndicatorObjType = {
+  batting: [
+    { id: 0, name: "타율", value: "avg" },
+    { id: 1, name: "홈런", value: "homeruns" },
+    { id: 2, name: "안타", value: "hits" },
+    { id: 3, name: "타점", value: "rbi" },
+    { id: 4, name: "타석", value: "ab" }, 
+  ],
+  pitching: [
+    { id: 0, name: "승", value: "win" },
+    { id: 1, name: "패", value: "lose" },
+    { id: 2, name: "방어율", value: "era" },
+    { id: 3, name: "피안타", value: "h" },
+    { id: 4, name: "피홈런", value: "hr" }, 
+  ]
+}
+
+interface ListBoxProps {
+  onHandleIndicatorChange: any;
+  type: string;
+}
+
+const ListBox: React.FC<ListBoxProps> = ({ onHandleIndicatorChange, type }) => {
+
+  const [selected, setSelected] = useState<any>(indicatorMap["batting"][0]);
+
+  useEffect(() => {
+    setSelected(indicatorMap[type as keyof IndicatorObjType][0]);
+  } ,[type]);
 
   useEffect(() => {
     onHandleIndicatorChange(selected);
@@ -40,7 +75,7 @@ const ListBox: React.FC<ListBoxProps> = ({ onHandleIndicatorChange }) => {
           leaveTo="opacity-0"
         >
           <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {indicator.map((indicator, personIdx) => (
+            {indicatorMap[type as keyof IndicatorObjType].map((indicator, personIdx) => (
               <Listbox.Option
                 key={personIdx}
                 className={({ active }) =>

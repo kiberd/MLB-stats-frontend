@@ -14,10 +14,6 @@ export const useSummaryPlayer = (player: any, type: string) => {
   const [summaryData, setSummaryData] = useState<any>();
 
   useEffect(() => {
-    // const years = player._source.player.batting.filter(
-    //     (x: any) => x.stint == 1
-    //   ).length;
-
     const years = player._source.player[type].filter(
       (x: any) => x.stint == 1
     ).length;
@@ -71,5 +67,4 @@ export const useSummaryPlayer = (player: any, type: string) => {
   }, [player, type]);
 
   return summaryData;
-
 };

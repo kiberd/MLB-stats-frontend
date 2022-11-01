@@ -3,7 +3,7 @@ import StatTable from "../chart/StatTable";
 import useMakeTableData from "../../hooks/useMakeTableData";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import LineChart from "../chart/LineChart";
-import useCleansPlayer from "../../hooks/useCleansPlayer";
+import { useCleansPlayer } from "../../hooks/useCleansPlayer";
 import ListBox from "../ListBox";
 // import XLSX from "xlsx";
 import * as XLSX from "xlsx";
@@ -16,7 +16,7 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
   const [indicator, setIndicator] = useState<string>("avg");
   const [enabled, setEnabled] = useState<boolean>(true);
   const { columns, rowData } = useMakeTableData(data._source.player.batting);
-  const lineChartData = useCleansPlayer(data, indicator);
+  const lineChartData = useCleansPlayer(data, indicator, "batting");
 
   const handleIndicatorChange = (indi: any) => {
     setIndicator(indi.value);
@@ -119,7 +119,7 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
         {/* Right */}
         <div className="w-full hidden tablet:block laptop:w-[70%] h-full laptop:pl-4 mt-4 laptop:mt-0 border-t border-gray-300 laptop:border-none">
           <div className="w-[20%] mt-4 laptop:mt-0 laptop:ml-8">
-            <ListBox onHandleIndicatorChange={handleIndicatorChange} />
+            <ListBox onHandleIndicatorChange={handleIndicatorChange} type={"batting"} />
           </div>
 
           {lineChartData && (

@@ -8,6 +8,7 @@ import useSearchPlayers from "../../hooks/useSearchPlayers";
 import ClipLoader from "react-spinners/ClipLoader";
 import HorizontalBarChart from "../chart/HorizontalBarChart";
 import { summaryPlayer, makeBarChartData } from "../../utils/calc";
+// import { useSummaryPlayer } from "../../hooks/useSummaryPlayer";
 import { XMarkIcon, InformationCircleIcon } from "@heroicons/react/24/solid";
 import ReactTooltip from "react-tooltip";
 
@@ -109,7 +110,7 @@ const CompareContainer = () => {
     let isValid = true;
     const summaryData = summaryPlayer(data, "batting");
 
-    summaryData.map((data) => {
+    summaryData.map((data: any) => {
       if (Number(data.value) === 0 || Number(data.value) === 1) isValid = false;
     });
 

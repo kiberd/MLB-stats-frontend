@@ -91,6 +91,56 @@ export const getInningValue = (pitchingRecord: any, years: number) => {
   return inningValue < 376 ? inningValue / 376 : 1;
 };
 
+export const summaryPlayer = (player: any, type: string) => {
+  const years = player._source.player[type].filter(
+    (x: any) => x.stint == 1
+  ).length;
+
+  let record;
+  if (type === "batting") {
+    record = player._source.player.career_batting;
+  } else {
+    record = player._source.player.career_pitching;
+  }
+
+  return type === "batting"
+    ? [
+        {
+          letter: "OnBase",
+          value: getOnBaseValue(record).toFixed(3),
+        },
+        {
+          letter: "OPS",
+          value: getOPSValue(record).toFixed(3),
+        },
+        {
+          letter: "Power",
+          value: getPowerValue(record).toFixed(3),
+        },
+        {
+          letter: "Contact",
+          value: getAvgValue(record).toFixed(3),
+        },
+      ]
+    : [
+        {
+          letter: "Win",
+          value: getWinValue(record, years).toFixed(3),
+        },
+        {
+          letter: "ERA",
+          value: getEraValue(record, years).toFixed(3),
+        },
+        {
+          letter: "SO",
+          value: getSoValue(record, years).toFixed(3),
+        },
+        {
+          letter: "Inning",
+          value: getInningValue(record, years).toFixed(3),
+        },
+      ];
+};
 
 export const makeBarChartData = (playerList: any) => {
   const barChartData: any[] = [

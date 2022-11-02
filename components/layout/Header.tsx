@@ -16,7 +16,7 @@ const Header = () => {
       <nav className="flex items-center ml-1 tablet:px-4">
         <div className="mr-4 text-sm text-gray-400 tablet:mr-10">
           <Link href="/compare">
-            <a>선수비교</a>
+            <a>선수비교 (타격)</a>
           </Link>
         </div>
         <SearchInput />

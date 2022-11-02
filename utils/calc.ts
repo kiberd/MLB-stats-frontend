@@ -54,41 +54,50 @@ export const getOnBaseValue = (battingRecord: any) => {
   return onBaseValue < 0.483 ? onBaseValue / 0.483 : 1;
 };
 
-// Win : 승리 (max : 20)
-// Era : 평균자책점 (max : 1.82)
-// So : 삼진 (max : 220)
+// Win : 승리 (max : 30)
+// Era : 평균자책점 (max : 1)
+// So : 삼진 (max : 383)
 // Inning: 이닝 (max : 376)
 
-export const getWinValue = (pitchingRecord: any, years: number) => {
-  const winValue = pitchingRecord.win / years;
+export const getWinValue = (pitchingRecord: any) => {
+  
+  let winValue = 0;
+  pitchingRecord.map((record: any) => {
+    if (record.win > winValue) winValue = record.win;
+  });
 
-  // console.log("winValue : ", winValue);
-
-  return winValue < 20 ? winValue / 20 : 1;
+  return winValue < 25 ? winValue / 25 : 1;
 };
 
-export const getEraValue = (pitchingRecord: any, years: number) => {
-  const eraValue = Number(pitchingRecord.era);
-
-  // console.log("eraValue : ", eraValue);
-
-  return eraValue > 1.82 ? 1.82 / eraValue : 1;
+export const getEraValue = (pitchingRecord: any) => {
+  
+  let eraValue = 99;
+  pitchingRecord.map((record: any) => {
+    if (Number(record.era) < eraValue) eraValue = Number(record.era);
+  });
+  
+  return eraValue > 1.5 ? 1.5 / eraValue : 1;
 };
 
-export const getSoValue = (pitchingRecord: any, years: number) => {
-  const soValue = pitchingRecord.so / years;
+export const getSoValue = (pitchingRecord: any) => {
 
-  // console.log("soValue : ", soValue);
-
-  return soValue < 220 ? soValue / 220 : 1;
+  let soValue = 0;
+  pitchingRecord.map((record: any) => {
+    if (record.so > soValue) soValue = record.so;
+  })
+  console.log(soValue);
+  return soValue < 384 ? soValue / 384 : 1;
 };
 
-export const getInningValue = (pitchingRecord: any, years: number) => {
-  const inningValue = pitchingRecord.ipouts / 3 / years;
+export const getInningValue = (pitchingRecord: any) => {
+  
 
-  // console.log("inningValue : ", inningValue);
+  let inningValue = 0;
+  pitchingRecord.map((record: any) => {
+    if (record.ipouts / 3 > inningValue) inningValue = record.ipouts / 3;
+  })
 
-  return inningValue < 376 ? inningValue / 376 : 1;
+  return inningValue < 377 ? inningValue / 377 : 1;
 };
 
 export const summaryPlayer = (player: any, type: string) => {
@@ -100,7 +109,7 @@ export const summaryPlayer = (player: any, type: string) => {
   if (type === "batting") {
     record = player._source.player.career_batting;
   } else {
-    record = player._source.player.career_pitching;
+    record = player._source.player.pitching;
   }
 
   return type === "batting"
@@ -125,19 +134,19 @@ export const summaryPlayer = (player: any, type: string) => {
     : [
         {
           letter: "Win",
-          value: getWinValue(record, years).toFixed(3),
+          value: getWinValue(record).toFixed(3),
         },
         {
           letter: "ERA",
-          value: getEraValue(record, years).toFixed(3),
+          value: getEraValue(record).toFixed(3),
         },
         {
           letter: "SO",
-          value: getSoValue(record, years).toFixed(3),
+          value: getSoValue(record).toFixed(3),
         },
         {
           letter: "Inning",
-          value: getInningValue(record, years).toFixed(3),
+          value: getInningValue(record).toFixed(3),
         },
       ];
 };

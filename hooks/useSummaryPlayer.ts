@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   getPowerValue,
   getAvgValue,
@@ -22,7 +22,8 @@ export const useSummaryPlayer = (player: any, type: string) => {
     if (type === "batting") {
       record = player._source.player.career_batting;
     } else {
-      record = player._source.player.career_pitching;
+      // record = player._source.player.career_pitching;
+      record = player._source.player.pitching;
     }
 
     if (type === "batting") {
@@ -48,19 +49,19 @@ export const useSummaryPlayer = (player: any, type: string) => {
       setSummaryData([
         {
           letter: "Win",
-          value: getWinValue(record, years).toFixed(3),
+          value: getWinValue(record).toFixed(3),
         },
         {
           letter: "ERA",
-          value: getEraValue(record, years).toFixed(3),
+          value: getEraValue(record).toFixed(3),
         },
         {
           letter: "SO",
-          value: getSoValue(record, years).toFixed(3),
+          value: getSoValue(record).toFixed(3),
         },
         {
           letter: "Inning",
-          value: getInningValue(record, years).toFixed(3),
+          value: getInningValue(record).toFixed(3),
         },
       ]);
     }

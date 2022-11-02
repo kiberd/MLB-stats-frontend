@@ -63,6 +63,7 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
 
       {/* 요약 정보 */}
       <div className="flex flex-col laptop:flex-row justify-between px-8 mt-5 laptop:h-[300px] w-full">
+
         {/* Left */}
         <div className="flex flex-col text-sm text-gray-700 w-full laptop:w-[30%] h-full laptop:border-r laptop:border-gray-300 laptop:pr-6 justify-center tablet:justify-around">
           <div className="flex flex-col items-center justify-center">
@@ -139,6 +140,7 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
 
       {/* 세부 정보 */}
       <div className="w-full px-8 mt-12">
+        
         <div className="flex items-center justify-between border-b-[3px] border-teal-800">
           <span className="text-2xl font-bold">타격기록</span>
           <span className="mt-4 mb-2 text-sm font-bold underline cursor-pointer">
@@ -151,6 +153,7 @@ const DetailResult: React.FC<DetailResultProps> = ({ data }) => {
         <div className="flex w-full mt-4 overflow-auto desktop:justify-center h-[50vh] overscroll-contain">
           {rowData && <StatTable columns={columns} data={rowData} />}
         </div>
+
       </div>
     </div>
   );

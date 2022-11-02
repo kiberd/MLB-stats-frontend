@@ -1,5 +1,7 @@
 // 점수 계산 (max 수치는 역대 최고기록 기준)
 
+import { initScriptLoader } from "next/script";
+
 // Power : 장타율 (max : 0.690)
 // OPS : ops (max: 1.164)
 // Contact : 타율 (max: 0.366)
@@ -65,6 +67,7 @@ export const getWinValue = (pitchingRecord: any) => {
   pitchingRecord.map((record: any) => {
     if (record.win > winValue) winValue = record.win;
   });
+  
 
   return winValue < 25 ? winValue / 25 : 1;
 };
@@ -76,7 +79,8 @@ export const getEraValue = (pitchingRecord: any) => {
     if (Number(record.era) < eraValue) eraValue = Number(record.era);
   });
   
-  return eraValue > 1.5 ? 1.5 / eraValue : 1;
+  
+  return eraValue > 1 ? 1 / eraValue : 1;
 };
 
 export const getSoValue = (pitchingRecord: any) => {
@@ -85,7 +89,7 @@ export const getSoValue = (pitchingRecord: any) => {
   pitchingRecord.map((record: any) => {
     if (record.so > soValue) soValue = record.so;
   })
-  console.log(soValue);
+  
   return soValue < 384 ? soValue / 384 : 1;
 };
 
@@ -96,6 +100,7 @@ export const getInningValue = (pitchingRecord: any) => {
   pitchingRecord.map((record: any) => {
     if (record.ipouts / 3 > inningValue) inningValue = record.ipouts / 3;
   })
+  
 
   return inningValue < 377 ? inningValue / 377 : 1;
 };

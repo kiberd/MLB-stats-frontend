@@ -21,7 +21,7 @@ interface SearchResultCardProps {
 const typeList = ["pitching", "batting"];
 
 const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
-  // console.log(player);
+
 
   const [indicator, setIndicator] = useState<string>("avg");
   const [type, setType] = useState<string>(typeList[0]);
@@ -34,28 +34,22 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
   const lineChartData = useCleansPlayer(player, indicator, type);
   const summaryData = useSummaryPlayer(player, type);
 
-  // console.log(summaryData);
-
   useEffect(() => {
     isPitching ? setType(typeList[0]) : setType(typeList[1]);
   }, [isPitching]);
 
   useEffect(() => {
-    // 종합 데이터중 하나라도 이상한 값 (0 or max) 이 있으면 set validate false
-    if (summaryData){
-      // console.log(summaryData);
-      setValidate(true);
+    if (summaryData) {
+    
+     setValidate(true);
+
       summaryData.map((data: any) => {
-        if (Number(data.value) === 0 || Number(data.value) === 1){
+        if (Number(data.value) === 0 || Number(data.value) === 1) {
           setValidate(false);
-        } 
+        }
       });
     }
   }, [summaryData]);
-
-  useEffect(() => {
-    // console.log(validate);
-  }, [validate])
 
 
   const handleIndicatorChange = (indi: any) => {
@@ -100,7 +94,6 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
                   isPitching ? "bg-[#115E59]" : "bg-gray-200 mr-4"
                 } relative inline-flex h-5 w-10 items-center rounded-full mr-4`}
               >
-                {/* <span className="sr-only">Enable notifications</span> */}
                 <span
                   className={`${
                     isPitching ? "translate-x-6" : "translate-x-1"

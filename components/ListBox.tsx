@@ -34,8 +34,9 @@ const indicatorMap: IndicatorObjType = {
     { id: 0, name: "승", value: "win" },
     { id: 1, name: "패", value: "lose" },
     { id: 2, name: "방어율", value: "era" },
-    { id: 3, name: "피안타", value: "h" },
-    { id: 4, name: "피홈런", value: "hr" }, 
+    { id: 3, name: "세이브", value: "sv" },
+    { id: 4, name: "피안타", value: "h" },
+    { id: 5, name: "피홈런", value: "hr" }, 
   ]
 }
 

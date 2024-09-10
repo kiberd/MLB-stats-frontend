@@ -24,19 +24,19 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
 
 
   const [indicator, setIndicator] = useState<string>("avg");
-  const [type, setType] = useState<string>(typeList[0]);
+  // const [type, setType] = useState<string>(typeList[0]);
 
   const [validate, setValidate] = useState<boolean>(true);
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
-  const [isPitching, setIsPitching] = useState(false);
+  // const [isPitching, setIsPitching] = useState(false);
 
-  const lineChartData = useCleansPlayer(player, indicator, type);
-  const summaryData = useSummaryPlayer(player, type);
+  const lineChartData = useCleansPlayer(player, indicator, "batting");
+  const summaryData = useSummaryPlayer(player, "batting");
 
-  useEffect(() => {
-    isPitching ? setType(typeList[0]) : setType(typeList[1]);
-  }, [isPitching]);
+  // useEffect(() => {
+  //   isPitching ? setType(typeList[0]) : setType(typeList[1]);
+  // }, [isPitching]);
 
   useEffect(() => {
     if (summaryData) {
@@ -86,7 +86,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
                   Detail
                 </button>
               </div>
-
+              {/* 
               <Switch
                 checked={isPitching}
                 onChange={() => setIsPitching(!isPitching)}
@@ -100,7 +100,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
                   } inline-block h-3 w-3 transform rounded-full bg-white transition`}
                 />
               </Switch>
-
+              */}
               <InformationCircleIcon
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
@@ -122,6 +122,8 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
 
           {/* Record */}
           <div className="h-[10%] flex items-center mb-1">
+
+            {/*
             {isPitching ? (
               <>
                 <span className="text-xs text-gray-500">
@@ -159,6 +161,25 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
                 </span>
               </>
             )}
+            */}
+            
+            <span className="text-xs text-gray-500">
+              {
+                player._source.player.batting.filter(
+                  (x: any) => x.stint == 1
+                ).length
+              }{" "}
+              년 &#183;{"   "}
+            </span>
+
+            <span className="ml-1 text-xs text-gray-500">
+              타율 :{" "}
+              {cleanAverageString(player._source.player.career_batting.avg)}
+              {"   "} / 안타 :{" "}
+              {player._source.player.career_batting.hits.toLocaleString()}
+              {"   "} / 홈런 :{" "}
+              {player._source.player.career_batting.homeruns.toLocaleString()}
+            </span>
           </div>
 
           {/* Radar Chart */}
@@ -185,10 +206,10 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({ player }) => {
         <div className="ml-2 tablet:w-[65%] laptop:w-[70%] h-full hidden tablet:block">
           <div className="flex justify-between h-[10%]">
             <div className="w-[30%] laptop:w-[20%] ml-4">
-              <ListBox
+              {/* <ListBox
                 onHandleIndicatorChange={handleIndicatorChange}
                 type={type}
-              />
+              /> */}
             </div>
 
             <div className="mr-10 text-center">

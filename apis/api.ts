@@ -10,7 +10,6 @@ export const getPlayersInfo = async (params: SearchPlayersParams | null) => {
       starting_index: params?.startingIndex,
     }
   );
-
   return data;
 };
 

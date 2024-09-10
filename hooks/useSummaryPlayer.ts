@@ -14,9 +14,9 @@ export const useSummaryPlayer = (player: any, type: string) => {
   const [summaryData, setSummaryData] = useState<any>();
 
   useEffect(() => {
-    const years = player._source.player[type].filter(
-      (x: any) => x.stint == 1
-    ).length;
+    // const years = player._source.player[type].filter(
+    //   (x: any) => x.stint == 1
+    // ).length;
 
     let record;
     if (type === "batting") {

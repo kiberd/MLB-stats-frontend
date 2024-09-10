@@ -64,7 +64,7 @@ export const getOnBaseValue = (battingRecord: any) => {
 export const getWinValue = (pitchingRecord: any) => {
   
   let winValue = 0;
-  pitchingRecord.map((record: any) => {
+  pitchingRecord?.map((record: any) => {
     if (record.win > winValue) winValue = record.win;
   });
   
